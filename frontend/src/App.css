@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+*{
+    @apply p-0 m-0
+}
+
+body{
+    @apply h-[100vh] w-[100vw]
+}
