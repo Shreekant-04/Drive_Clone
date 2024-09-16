@@ -5,6 +5,30 @@
     @apply p-0 m-0
 }
 
+
+
+
 body{
-    @apply h-[100vh] w-[100vw]
+    @apply h-[100vh] w-[100vw] overflow-x-hidden
+}
+.listSideActive{
+    @apply bg-[#004646] w-[90%] rounded-3xl cursor-pointer p-2 flex my-2 justify-center text-white items-center 
+}
+
+.listSideNormal{
+    @apply  w-[90%] rounded-3xl cursor-pointer p-2 flex my-2 justify-center items-center hover:bg-[#004646] hover:text-white transition-all duration-100
+}
+
+.listSideNormal:hover  path {
+  stroke: white;
+
+}
+.btnAction1{
+    @apply flex w-[10%]  items-center justify-evenly border p-2 rounded-sm  border-[#004646] text-[#004646] hover:bg-[#004646] hover:text-white stroke-white transition-all duration-100
+}
+.btnAction2{
+    @apply flex w-[10%]  items-center justify-evenly border p-2 bg-[#004646] rounded-sm text-white
+}
+img{
+    @apply cursor-pointer
 }
