@@ -130,7 +130,7 @@ function Sidebar() {
       <hr />
       <div className="storage p-2 w-full listSideNormal">
         <div className="flex-col items-center w-[90%] justify-center">
-          <li className="listSideNormal ">
+          <li className="listSideNormal hover:bg-transparent transition-all duration-100">
             <span>
               <svg
                 width="20"

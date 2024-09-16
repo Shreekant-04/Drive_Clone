@@ -9,7 +9,7 @@
 
 
 body{
-    @apply h-[100vh] w-[100vw] overflow-x-hidden
+    @apply h-[100vh] w-[100vw] overflow-x-hidden transition-all duration-300
 }
 .listSideActive{
     @apply bg-[#004646] w-[90%] rounded-3xl cursor-pointer p-2 flex my-2 justify-center text-white items-center  stroke-white
