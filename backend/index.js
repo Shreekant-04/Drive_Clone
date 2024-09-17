@@ -9,10 +9,7 @@ const port = process.env.PORT || 8080;
 
 app.use(
   cors({
-    origin: [
-      "https://drive-clone-frontend.vercel.app/",
-      "https://drive-clone-orcin.vercel.app/",
-    ],
+    origin: "*",
     credentials: true,
   })
 );
