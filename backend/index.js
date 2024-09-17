@@ -8,14 +8,7 @@ const authRoutes = require("./routes/authRoutes");
 const port = process.env.PORT || 8080; 
 
 app.use(
-  cors({
-    origin: [
-      "https://drive-clone-frontend.vercel.app",
-      "https://drive-clone-orcin.vercel.app",
-    ],
-    credentials: true,
-    allowedHeaders: ['Content-Type', 'Authorization'] 
-  })
+  cors()
 );
 
 
