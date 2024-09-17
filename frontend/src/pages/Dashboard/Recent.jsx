@@ -42,7 +42,7 @@ function Recent() {
       <div className="w-full p-8 flex flex-col justify-start ">
         {data.map((item, i) => {
           return ( 
-            <div className="flex w-full cursor-pointer justify-between p-3 my-2 items-center bg-[#e7e7e763] text-[12px] font-inter rounded-[16px] hover:scale-105 duration-200 transition-all">
+            <div key={i} className="flex w-full cursor-pointer justify-between p-3 my-2 items-center bg-[#e7e7e763] text-[12px] font-inter rounded-[16px] hover:scale-105 duration-200 transition-all">
               <div className="itemName flex items-center justify-evenly w-[10%]">
                 <img src={item.type.includes('doc')?"/Logo/Recent/doc.svg":"/Logo/Recent/other.svg"} alt="" />
                 <p>{item.name}</p>
