@@ -34,7 +34,7 @@ const [data,setData] = useState([
        {
         data.map((item,i)=>{
              return(
-                 <div className='bg-[#e7e7e763] w-[24%] h-[50%] cursor-pointer rounded-[20px] p-3 flex-col hover:scale-105 duration-200 transition-all'>
+                 <div key={i} className='bg-[#e7e7e763] w-[24%] h-[50%] cursor-pointer rounded-[20px] p-3 flex-col hover:scale-105 duration-200 transition-all'>
                     <div className='flex w-full justify-between'>
                       <img src={item.type.includes('im') ? image :item.type.includes('vid')?video:item.type.includes('doc')?doc:other} alt="" />
                       <div className='w-[70%] flex flex-col justify-center items-start'>

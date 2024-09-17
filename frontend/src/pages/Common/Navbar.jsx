@@ -1,6 +1,34 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import api from '../../utils/api';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function Navbar() {
+  const nav = useNavigate()
+  const [token,setToken] = useState(localStorage.getItem('token'))
+  useEffect(() => {
+    const verifyUser = async () => {
+      
+      try {
+        const res = await axios.get(`${api}auth/verify-user`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        
+        
+      } catch (error) {
+        nav('/')
+        console.error('Error:', error.response ? error.response.data : error.message);
+      } finally {
+       
+      }
+    };
+
+    if (token) {
+      verifyUser(); 
+    }
+  }, [token]);
   return (
     <div className='w-full h-20 flex items-center p-4 fixed border-b-[1px] border-[#979797] z-20 bg-white'>
     <div className='flex items-center justify-between w-full'>

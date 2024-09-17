@@ -3,6 +3,9 @@ import Stats from "./Stats";
 import Recent from "./Recent";
 
 function HomePage() {
+ 
+
+
   return (
     <div className="font-inter absolute top-16 left-96 w-[75%] h-[100%]">
       <div className="flex justify-evenly  items-center pb-2 w-[75%] bg-white h-[20%] z-10 fixed">

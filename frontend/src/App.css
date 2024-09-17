@@ -34,3 +34,6 @@ body{
 img{
     @apply cursor-pointer
 }
+.leftAuth img{
+    @apply absolute h-[100vh]
+}
