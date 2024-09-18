@@ -34,6 +34,82 @@ body{
 img{
     @apply cursor-pointer
 }
+
+
+/* -----------------------------------------------  Shining Effect for Plan Cards ---------------------------------------------------------*/
+.plans-card2 {
+    position: relative;
+    overflow: hidden; 
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.plans-card2:hover {
+    transform: scale(1.05); 
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.6), 0 0 40px rgba(0, 255, 255, 0.4), 0 0 60px rgba(0, 255, 255, 0.2); 
+    border: 1px solid white;
+}
+
+.plans-card2::before, .plans-card2::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 200%;
+    background: linear-gradient(120deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.1));
+    transform: skewX(-30deg);
+    transition: none;
+    z-index: 1;
+    
+}
+
+.plans-card2::before {
+    left: -150%; 
+     
+}
+
+.plans-card2::after {
+    left: -250%; 
+   
+}
+
+.plans-card2:hover::before {
+    animation: shine 0.75s forwards;
+}
+
+.plans-card2:hover::after {
+    animation: shine-back 0.75s forwards 0.3s; 
+}
+
+@keyframes shine {
+    0% {
+        left: -150%;
+    }
+    100% {
+        left: 150%;
+    }
+}
+
+@keyframes shine-back {
+    0% {
+        left: -250%; 
+    }
+    100% {
+        left: -150%; 
+    }
+}
+
+
+.plans-card1 {
+    
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.plans-card1:hover {
+    transform: scale(1.05); 
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.6), 0 0 40px rgba(0, 255, 255, 0.4), 0 0 60px rgba(0, 255, 255, 0.2); 
+}
+
+
 .leftAuth img{
     @apply absolute h-[100vh]
 }
