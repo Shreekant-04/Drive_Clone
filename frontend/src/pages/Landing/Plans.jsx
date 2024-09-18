@@ -4,7 +4,7 @@ function Plans() {
   return (
     <div className='bg-gray-900 py-10 px-7  flex justify-center  '>
         <div className='lg:w-11/12  lg:p-14'>
-        <div>
+        <div className='px-4 lg:px-0'>
             <h2 className='text-teal-500 text-lg lg:text-3xl font-semibold'>Premium Plans</h2>
             <h2 className='text-gray-100 text-2xl lg:text-5xl font-semibold mt-2'>We have attractive and budget-friendly offers!</h2>
             <h2 className='text-gray-400 lg:text-xl mt-2'>We offer a range of cost-effective options that can serve as alternatives based on your requirements</h2>

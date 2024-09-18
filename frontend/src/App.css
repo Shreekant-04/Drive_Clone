@@ -37,3 +37,22 @@ img{
 .leftAuth img{
     @apply absolute h-[100vh]
 }
+
+::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+    background: transparent;
+}
+
+::-webkit-scrollbar-track {
+    margin-block: 0.1em;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 100vh;
+    @apply bg-zinc-500
+}
+
+::-webkit-scrollbar-thumb:hover {
+    @apply bg-zinc-900
+}

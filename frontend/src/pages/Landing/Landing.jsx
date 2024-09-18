@@ -1,12 +1,14 @@
-import React from 'react'
-import Plans from './Plans'
+import React from "react";
+import Partners from "./Partners";
+import Plans from "./Plans";
 
 function Landing() {
   return (
     <>
-        <Plans/>
+      <Partners />
+      <Plans />
     </>
-  )
+  );
 }
 
-export default Landing
+export default Landing;
