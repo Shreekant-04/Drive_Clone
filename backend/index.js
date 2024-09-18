@@ -5,11 +5,11 @@ const cors = require("cors");
 const mongoose = require("./config/connection");
 const authRoutes = require("./routes/authRoutes");
 
-const port = process.env.PORT || 8080; 
+const port = process.env.PORT || 8080;
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "*",
     credentials: true,
   })
 );
