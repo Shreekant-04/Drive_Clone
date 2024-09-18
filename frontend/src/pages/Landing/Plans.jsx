@@ -9,10 +9,10 @@ function Plans() {
             <h2 className='text-gray-100 text-2xl lg:text-5xl font-semibold mt-2'>We have attractive and budget-friendly offers!</h2>
             <h2 className='text-gray-400 lg:text-xl mt-2'>We offer a range of cost-effective options that can serve as alternatives based on your requirements</h2>
         </div>
-        <div className="plans-cards mt-4 flex flex-col gap-4 items-center md:flex-row lg:flex-row  lg:gap-16">
+        <div className="plans-cards mt-4 flex flex-col gap-5 items-center md:flex-row lg:flex-row  lg:gap-28">
 
             {/* Card 1 */}
-            <div className="plans-card1 w-10/12  lg:w-4/12 rounded-xl p-4  lg:p-10  bg-white">
+            <div className="plans-card1 w-10/12  lg:w-4/12 rounded-xl p-4  lg:p-10  bg-white cursor-pointer">
                 <div className='plans-price'>
                     <h3 className='bg-teal-100 text-teal-800 lg:text-lg font-medium p-2 px-4 w-fit rounded-full'>Freemium Pack</h3>
                     <p className='py-4 text-gray-400 lg:text-lg border-b-2 border-gray-300'><span className='lg:text-5xl text-gray-800 font-semibold'>$0</span>/Account</p>
@@ -31,13 +31,13 @@ function Plans() {
                         <p className='lg:text-lg'>2 Account Admin</p>
                     </div>
                 </div>
-                <button className='plans-button mt-4 p-2 border-2 rounded border-teal-200 text-teal-800 lg:text-lg font-semibold w-full hover:border-white hover:bg-teal-800 hover:text-white'>
+                <button className='plans-button mt-4 p-2 border-2 rounded border-teal-200 text-teal-800 transition lg:text-lg font-semibold w-full hover:border-white hover:bg-teal-800 hover:text-white'>
                     Join Now
                 </button>
             </div>
 
             {/* Card 2 */}
-            <div className="plans-card1 w-10/12 p-4 lg:w-4/12  rounded-xl lg:p-7 lg:py-5 bg-teal-800">
+            <div className="plans-card2 w-10/12 p-4 lg:w-4/12 border-transparent border-2 rounded-xl lg:p-7 lg:py-5 bg-teal-800 cursor-pointer">
                 <div className='plans-price'>
                     <h3 className='bg-white w-fit text-teal-800 lg:text-lg font-medium p-2 px-4 rounded-full'>Premium Pack</h3>
                     <p className='py-4 text-gray-100 lg:text-lg border-b-2 border-gray-300'><span className='lg:text-5xl text-white font-semibold'>$55</span>/Month</p>
@@ -56,13 +56,13 @@ function Plans() {
                         <p className='lg:text-lg text-white'>10 Account Admin</p>
                     </div>
                 </div>
-                <button className='plans-button mt-4 p-2 border-2 border-gray-100 rounded text-teal-800 bg-gray-100 lg:text-lg font-semibold w-full  hover:bg-teal-100 hover:border-teal-100'>
+                <button className='plans-button mt-4 p-2 border-2 border-gray-100 rounded text-teal-800 bg-gray-100 lg:text-lg font-semibold w-full  '>
                     Buy Now
                 </button>
             </div>
 
             {/* Card 3 */}
-            <div className="plans-card1 w-10/12 p-4 lg:w-4/12  rounded-xl lg:lg:p-7 lg:py-5 bg-white">
+            <div className="plans-card1 w-10/12 p-4 lg:w-4/12  rounded-xl lg:lg:p-7 lg:py-5 bg-white cursor-pointer">
                 <div className='plans-price'>
                     <h3 className='bg-teal-100 w-fit text-teal-800 lg:text-lg font-medium p-2 px-4 rounded-full'>Bussiness Pack</h3>
                     <p className='py-4 text-gray-400 lg:text-lg border-b-2 border-gray-300'><span className='lg:text-5xl text-gray-800 font-semibold'>$75</span>/Month</p>
