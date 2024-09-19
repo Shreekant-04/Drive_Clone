@@ -5,7 +5,7 @@ const cors = require("cors");
 const mongoose = require("./config/connection");
 const authRoutes = require("./routes/authRoutes");
 const fileRoutes = require("./routes/fileRoutes");
-
+const downRoutes = require("./routes/downRoutes");
 const port = process.env.PORT || 8080;
 
 app.use(
@@ -17,8 +17,10 @@ app.use(
 
 app.use(express.json());
 
+
 app.use("/api/auth", authRoutes);
 app.use('/api/files', fileRoutes  );
+app.use('/api/resource', downRoutes  );
 
 app.use((req, res) => {
   res.status(404).json({ message: "Page not found." });
