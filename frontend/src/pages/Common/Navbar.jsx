@@ -44,7 +44,7 @@ function Navbar() {
           <p className="font-roboto text-4xl font-bold">rive</p>
         </div>
         <div className="searchContainer flex w-11/12 items-center justify-center">
-          <p className="font-inter mx-4">File Manager</p>
+          <p className="font-inter mx-4"></p>
           <div className="searchBox border-[1px] border-[#5F6368] w-4/5 rounded-full p-2">
             <div className="flex justify-between font-inter">
               <img src="/Logo/search.svg" alt="Search" />

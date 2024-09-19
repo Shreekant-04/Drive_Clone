@@ -1,9 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ProgressBar from "./ProgressBar";
 
-function Sidebar() {
+function Sidebar({data2,data}) {
+  const [available, setAvail] = useState(0);
+
+  useEffect(() => {
+    if (data && data.length > 0) {
+    
+      const totalSizeMB = data.reduce((total, item) => total + (item.size || 0), 0) / 1024 / 1024;
+  
+   
+      setAvail(totalSizeMB.toFixed(1));
+    }
+  }, [data]);
+ 
+
   return (
-    <div className="sideBar w-1/5 font-inter top-24 p-2 h-full fixed overflow-y-auto">
+    <div className="sideBar w-[20%] font-inter top-24 p-2 h-full fixed overflow-y-auto">
       <ul className="w-full flex flex-col items-center justify-center">
         <li className="listSideActive">
           <span>
@@ -147,8 +160,8 @@ function Sidebar() {
             </span>
             <p className="w-[80%]  text-start p-1">Storage</p>
           </li>
-          <ProgressBar total={100} available={75} />
-          <p className="p-2 mx-2">75 GB OF 100 GB</p>
+          <ProgressBar total={data2.total} available={available} />
+          <p className="p-2 mx-2">{available} MB OF {data2.total} MB</p>
         </div>
       </div>
     </div>
