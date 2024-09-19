@@ -2,13 +2,13 @@ import React from "react";
 import Stats from "./Stats";
 import Recent from "./Recent";
 
-function HomePage() {
- 
+function HomePage({open,data,data2}) {
+
 
 
   return (
-    <div className="font-inter absolute top-16 left-96 w-[75%] h-[100%]">
-      <div className="flex justify-evenly  items-center pb-2 w-[75%] bg-white h-[20%] z-10 fixed">
+    <div className="font-inter absolute top-16 left-72 w-[80%] h-[100%]">
+      <div className="flex justify-evenly  items-center pb-2 w-[80%] bg-white h-[20%] z-10 fixed">
         <h1 className="text-2xl w-[75%] font-[400]">Welcome To Drive</h1>
         <button className="btnAction1">
           Create
@@ -27,7 +27,7 @@ function HomePage() {
             </svg>
           </span>
         </button>
-        <button className="btnAction2">
+        <button className="btnAction2" onClick={()=>open(true)}>
           Upload
           <span>
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -37,8 +37,8 @@ function HomePage() {
           </span>
         </button>
       </div>
-      <Stats/>
-      <Recent/>
+      <Stats data={data}  data2={data2}/>
+      <Recent data={data} data2={data2}/>
     
 
     </div>
