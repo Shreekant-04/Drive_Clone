@@ -8,7 +8,13 @@ const fileRoutes = require("./routes/fileRoutes");
 
 const port = process.env.PORT || 8080;
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+    credentials: true,
+  })
+);
+
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
