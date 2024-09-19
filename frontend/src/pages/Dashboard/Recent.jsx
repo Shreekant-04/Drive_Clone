@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { checkFile, checkType } from '../../utils/fileType';
 import setTime from "../../utils/timeConverter";
+import api from "../../utils/api";
+import axios from "axios";
 
 
 function Recent({ data }) {
   const [fileTypes, setFileTypes] = useState({});
+  const [token,setToken] = useState(localStorage.getItem('token')||'')
 
   useEffect(() => {
     const fetchFileTypes = async () => {
@@ -21,6 +24,29 @@ function Recent({ data }) {
 
     fetchFileTypes();
   }, [data]);
+
+  const downloadFile = (filename,oName) => {
+    axios({
+      url: `${api}resource/downloadFile/${filename}`, 
+      method: 'GET',
+      responseType: 'blob',
+      headers:{
+        Authorization : `Bearer ${token}`
+      } 
+    })
+    .then(response => {
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', oName);
+      document.body.appendChild(link);
+      link.click();
+    })
+    .catch(err => {
+      console.error('Error downloading file:', err);
+    });
+    
+  };
 
   return (
     <>
@@ -70,7 +96,7 @@ function Recent({ data }) {
                 <p>{item.lName}</p>
               </div>
               <div className="menuBtn flex justify-evenly w-[5%]">
-                <img className="cursor-pointer" src="/Logo/Recent/download.svg" alt="Download" />
+                <img className="cursor-pointer" src="/Logo/Recent/download.svg" alt="Download" onClick={()=>downloadFile(item.storedName,item.fileName)} />
                 <img className="cursor-pointer" src="/Logo/Recent/edit.svg" alt="Edit" />
                 <img className="cursor-pointer" src="/Logo/Recent/menu.svg" alt="Menu" />
               </div>
