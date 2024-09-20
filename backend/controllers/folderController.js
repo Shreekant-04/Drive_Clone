@@ -1,11 +1,12 @@
 const Folder = require("../models/Folder");
+const File = require("../models/File");
 
 // Create a folder
 exports.createFolder = async (req, res) => {
   const { folderName } = req.body;
   console.log(folderName);
-  
-  const userId = req.user.id; // Assuming you're getting the user ID from the token
+
+  const userId = req.user.id;
 
   try {
     const folder = new Folder({ folderName, userId });
@@ -17,26 +18,46 @@ exports.createFolder = async (req, res) => {
   }
 };
 
-// Add file to a folder
-exports.addFileToFolder = async (req, res) => {
-  const { folderId, fileId } = req.body;
+
+// Get all folders for the user
+exports.getFolders = async (req, res) => {
+  try {
+    const folders = await Folder.find({ userId: req.user.id });
+    if (!folders || folders.length === 0) {
+      return res.status(404).json({ message: "No folders found" });
+    }
+    res.status(200).json(folders);
+  } catch (error) {
+    console.error("Error retrieving folders:", error);
+    res.status(500).json({ message: "Failed to retrieve folders", error });
+  }
+};
+
+
+// Get files in a specific folder
+exports.getFilesInFolder = async (req, res) => {
+  const folderId = req.params.folderId;
+  const userId = req.user.id;
 
   try {
-    const folder = await Folder.findById(folderId);
+    // Check if the folder exists and belongs to the user
+    const folder = await Folder.findOne({ _id: folderId, userId });
+
     if (!folder) {
-      return res.status(404).json({ error: "Folder not found" });
+      return res.json({ message: "Folder not found or access denied" });
     }
 
-    if (!folder.fileIds.includes(fileId)) {
-      folder.fileIds.push(fileId);
-      await folder.save();
+    // Find files associated with the given folder ID and user ID
+    const files = await File.find({ folderId, userId });
+    if (!files || files.length === 0) {
+      return res
+        .status(200)
+        .json({ message: "No files found in this folder", files: [] });
     }
 
-    res
-      .status(200)
-      .json({ message: "File added to folder successfully", folder });
+    res.status(200).json(files);
   } catch (error) {
-    console.error("Error adding file to folder:", error);
-    res.status(500).json({ error: "Failed to add file to folder" });
+    console.error("Error retrieving files in folder:", error);
+    res.status(500).json({ message: "Failed to retrieve files", error });
   }
 };

@@ -27,6 +27,7 @@
     "react-dom": "^18.3.1",
     "react-otp-input": "^3.1.1",
     "react-router-dom": "^6.24.0",
+    "react-toastify": "^10.0.5",
     "shimmer-effects-react": "^1.0.4",
     "styled-components": "^6.1.13",
     "swiper": "^11.1.5"
