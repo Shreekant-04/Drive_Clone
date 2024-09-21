@@ -4,7 +4,7 @@ import setTime from "../../utils/timeConverter";
 import api from "../../utils/api";
 import axios from "axios";
 
-function Recent({ data, onFolderClick, selectedFolder, handleGoBack }) {
+function Recent({data,onFolderClick,selectedFolder,handleGoBack,preview}) {
   const [fileTypes, setFileTypes] = useState({});
   const [folders, setFolders] = useState([]);
   const [token, setToken] = useState(localStorage.getItem("token") || "");
@@ -91,7 +91,7 @@ function Recent({ data, onFolderClick, selectedFolder, handleGoBack }) {
               <div
                 key={i}
                 className="flex w-full cursor-pointer justify-between p-3 my-2 items-center bg-[#e7e7e763] text-[12px] font-inter rounded-[16px] hover:scale-105 duration-200 transition-all"
-                onClick={() => onFolderClick(folder)} 
+                onClick={() => onFolderClick(folder)}
               >
                 <div className="itemName flex items-center text-center justify-start w-[15%]">
                   <img
@@ -132,17 +132,20 @@ function Recent({ data, onFolderClick, selectedFolder, handleGoBack }) {
               <div
                 key={i}
                 className="flex w-full cursor-pointer justify-between p-3 my-2 items-center bg-[#e7e7e763] text-[12px] font-inter rounded-[16px] hover:scale-105 duration-200 transition-all"
+                onClick={() => {
+                  preview(true,item);
+                }}
               >
                 <div className="itemName flex items-center text-center justify-start w-[15%]">
                   <img
-                  className="w-7"
+                    className=""
                     src={
                       fileTypes[item.fileName] === "Document"
                         ? "/Logo/Recent/doc.svg"
                         : fileTypes[item.fileName] === "Video"
                         ? "/Logo/Recent/video.svg"
                         : fileTypes[item.fileName] === "Image"
-                        ? "/Logo/Recent/image.png"
+                        ? "/Logo/Recent/image.svg"
                         : "/Logo/Recent/other.svg"
                     }
                     alt=""

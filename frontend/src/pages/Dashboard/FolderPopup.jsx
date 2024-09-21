@@ -53,7 +53,7 @@ const FolderPopup = ({ toggle }) => {
   };
 
   return (
-    <div className="w-[100vw] h-[100vh] fixed flex justify-center items-center z-50 bg-[#dfdcdc93] overflow-hidden">
+    <div className="w-[100vw] h-[100vh] fixed flex justify-center items-center z-50 bg-[#dfdcdc93] overflow-hidden font-inter">
       <div ref={popRef} className="w-[400px] p-6 bg-white rounded-lg shadow-lg">
         <div className="w-full flex justify-end">
           <button onClick={handleClose}>
@@ -81,13 +81,13 @@ const FolderPopup = ({ toggle }) => {
         <div className="flex justify-end space-x-4">
           <button
             onClick={handleCreateFolder}
-            className="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 transition"
+            className="bg-[#004646] text-white py-2 px-4 rounded-sm hover:bg-[#004646d0] transition"
           >
             Create
           </button>
           <button
             onClick={handleClose}
-            className="bg-gray-400 text-white py-2 px-4 rounded-md hover:bg-gray-500 transition"
+            className="bg-gray-400 text-white py-2 px-4 rounded-sm hover:bg-gray-500 transition"
           >
             Cancel
           </button>

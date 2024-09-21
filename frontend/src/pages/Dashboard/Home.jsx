@@ -6,13 +6,16 @@ import PopupUpload from "./PopupUpload";
 import FolderPopup from "./FolderPopup";
 import axios from "axios";
 import api from "../../utils/api";
+import Preview from "../Common/Preview";
 
 const Home = () => {
-  const [isOpen, setOpen] = useState(false); 
-  const [isFolderOpen, setFolderOpen] = useState(false); 
+  const [isOpen, setOpen] = useState(false);
+  const [isPreview, setPreview] = useState(true);
+  const [isFolderOpen, setFolderOpen] = useState(false);
   const [token, setToken] = useState(localStorage.getItem("token") || "");
-  const [data, setData] = useState([]); 
-  const [data2, setData2] = useState([]); 
+  const [data, setData] = useState([]);
+  const [data2, setData2] = useState([]);
+  const [previwData, setPreviewData] = useState('');
 
   // Fetch files and limits when token changes
   useEffect(() => {
@@ -52,6 +55,12 @@ const Home = () => {
     setFolderOpen((prev) => !prev);
   };
 
+  // Toggle the Preview Button
+  const togglePreview = (param, data) => {
+    setPreview(param);
+    setPreviewData(data);
+  };
+
   return (
     <div>
       <Navbar />
@@ -63,9 +72,13 @@ const Home = () => {
           data2={data2}
           isFolderOpen={isFolderOpen}
           toggleFolder={toggleFolder}
+          preview={togglePreview}
         />
         {isOpen && <PopupUpload open={toggleUpload} />}{" "}
         {isFolderOpen && <FolderPopup toggle={toggleFolder} />}{" "}
+        {isPreview && (
+          <Preview preview={togglePreview} dataPreview={previwData} />
+        )}{" "}
       </div>
     </div>
   );

@@ -5,8 +5,7 @@ import FolderPopup from "./FolderPopup";
 import axios from "axios";
 import api from "../../utils/api";
 
-
-function HomePage({ open, data, data2, isFolderOpen, toggleFolder }) {
+function HomePage({ open, data, data2, isFolderOpen, toggleFolder, preview }) {
   const [folderFiles, setFolderFiles] = useState();
   const [selectedFolder, setSelectedFolder] = useState(null);
   const handleFolderClick = async (folderId) => {
@@ -34,7 +33,7 @@ function HomePage({ open, data, data2, isFolderOpen, toggleFolder }) {
       <div className="flex justify-evenly items-center pb-2 w-[80%] bg-white h-[20%] z-10 fixed">
         <h1 className="text-2xl w-[75%] font-[400]">Welcome To Drive</h1>
         <button className="btnAction1" onClick={toggleFolder}>
-          Create Folder
+          Create
           <span>
             <svg
               width="13"
@@ -73,7 +72,9 @@ function HomePage({ open, data, data2, isFolderOpen, toggleFolder }) {
         data={selectedFolder ? folderFiles : data}
         onFolderClick={handleFolderClick}
         selectedFolder={selectedFolder}
-        handleGoBack={handleGoBack} 
+        handleGoBack={handleGoBack}
+        preview={preview}
+        data2={data2}
       />
       {isFolderOpen && <FolderPopup toggle={toggleFolder} />}
     </div>
