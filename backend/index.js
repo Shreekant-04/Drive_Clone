@@ -7,6 +7,8 @@ const authRoutes = require("./routes/authRoutes");
 const folderRoutes = require("./routes/folderRoutes");
 const fileRoutes = require("./routes/fileRoutes");
 const downRoutes = require("./routes/downRoutes");
+const prevRoutes = require("./routes/previewRoutes");
+const delRoutes = require("./routes/delRoutes");
 const port = process.env.PORT || 8080;
 
 app.use(
@@ -22,6 +24,8 @@ app.use("/api/auth", authRoutes);
 app.use('/api/files', fileRoutes  );
 app.use('/api/resource', downRoutes  );
 app.use("/api/folders", folderRoutes);
+app.use("/api/files", prevRoutes);
+app.use("/api/files", delRoutes);
 
 app.use((req, res) => {
   res.status(404).json({ message: "Page not found." });

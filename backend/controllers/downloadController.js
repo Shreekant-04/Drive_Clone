@@ -6,7 +6,8 @@ MongoClient.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true 
      db = client.db();
      bucket = new GridFSBucket(db, {
       bucketName: 'uploads' 
-    });
+});
+
 
 
     console.log('Connected to database and created GridFSBucket');
@@ -22,11 +23,27 @@ MongoClient.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true 
     }
   
     const downloadStream = bucket.openDownloadStreamByName(filename);
+    
+    // Set the headers to trigger download
+    res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+    res.setHeader('Content-Type', 'application/octet-stream');
+  
+    // Pipe the download stream to the response
+    downloadStream.pipe(res);
+  
+    // Handle errors
     downloadStream.on('error', (err) => {
       console.error('Error downloading file:', err);
       res.status(404).send('File not found or download error.');
     });
   
-    res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
-    downloadStream.pipe(res);
-  }
+    // Optionally handle the end of the download
+    downloadStream.on('finish', () => {
+      console.log('Download finished:', filename);
+    });
+  };
+  
+  exports.getBucket = () => {
+    return bucket;
+  };
+  
