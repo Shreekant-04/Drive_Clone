@@ -10,7 +10,7 @@ import Preview from "../Common/Preview";
 
 const Home = () => {
   const [isOpen, setOpen] = useState(false);
-  const [isPreview, setPreview] = useState(true);
+  const [isPreview, setPreview] = useState(false);
   const [isFolderOpen, setFolderOpen] = useState(false);
   const [token, setToken] = useState(localStorage.getItem("token") || "");
   const [data, setData] = useState([]);

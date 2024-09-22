@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { checkType } from "../../utils/fileType";
+import Viewer from "./Viewer";
+import axios from "axios";
+import api from "../../utils/api";
+
 
 function Preview({ preview, dataPreview }) {
   const [fileTypes, setType] = useState("");
-
+  const [token,setToken] = useState(localStorage.getItem('token'))
   useEffect(() => {
     const fetchFileType = async () => {
       try {
@@ -22,6 +26,27 @@ function Preview({ preview, dataPreview }) {
 
   const handleClose = () => {
     preview(false);
+  };
+  const handleDownload = (filename, oName) => {
+    axios({
+      url: `${api}resource/downloadFile/${filename}`,
+      method: "GET",
+      responseType: "blob",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => {
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", oName);
+        document.body.appendChild(link);
+        link.click();
+      })
+      .catch((err) => {
+        console.error("Error downloading file:", err);
+      });
   };
 
   return (
@@ -47,8 +72,8 @@ function Preview({ preview, dataPreview }) {
           />
           <p className="mx-2">{dataPreview.fileName || "Anydesk.exe"}</p>
         </div>
-        <div className="w-[50%] flex justify-end p-2">
-            <button>
+         <div className="w-[50%] flex justify-end p-2">
+            <button onClick={()=>{handleDownload(dataPreview.storedName,dataPreview.fileName)}}>
                 <img width={'25px'} src="Logo/Recent/downloadWhite.svg" alt="" />
             </button>
             <button className="rounded-full border-[2px] w-[12%] mx-2 p-2 hover:scale-105 duration-200 flex items-center justify-evenly">
@@ -60,9 +85,7 @@ function Preview({ preview, dataPreview }) {
         </div>
        
       </div>
-      <div className="w-[80%] bg-white h-[80%] rounded-lg my-10">
-h
-      </div>
+    <Viewer fileName = {dataPreview.storedName}/>
     </div>
   );
 }

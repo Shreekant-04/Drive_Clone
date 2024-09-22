@@ -17,7 +17,7 @@ function Navbar() {
             },
           });
 
-          console.log("User Verified:", res.data);
+        
         } catch (error) {
           console.error(
             "Error:",
