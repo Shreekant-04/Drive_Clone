@@ -34,7 +34,7 @@ exports.getFolders = async (req, res) => {
 };
 
 
-// Get files in a specific folder
+// Get files in a selected folder
 exports.getFilesInFolder = async (req, res) => {
   const folderId = req.params.folderId;
   const userId = req.user.id;
