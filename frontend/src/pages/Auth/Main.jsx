@@ -10,11 +10,13 @@ const checkPage = (page)=>{
 }
 
   return (
-    <div className='w-full h-[100vh] flex font-inter justify-between'>
-    <section className='leftAuth flex w-[45%]'>
-       <img src="/Logo/Auth/r1.svg" alt="" /> 
-       <img src="/Logo/Auth/r2.svg" alt="" /> 
-       <img src="/Logo/Auth/r3.svg" alt="" /> 
+    <div className='w-full h-[100vh] flex flex-col  lg:flex-row font-inter justify-between'>
+    <section className='leftAuth flex flex-col lg:flex-row relative h-[40%] md:h-[50%] lg:h-full w-full lg:w-[45%]'>
+     
+      <div className='absolute  h-[40vh] md:h-[50vh] lg:h-full  w-full lg:w-full rounded-b-full lg:rounded-r-full lg:rounded-b-none bg-[#03848462] z-1'></div>
+      <div className='absolute  h-[35vh] md:h-[45vh] lg:h-full w-full lg:w-11/12 rounded-b-full lg:rounded-r-full lg:rounded-b-none bg-[#00787888] z-2'></div>
+      <div className='absolute h-[30vh] md:h-[40vh] lg:h-full  w-full lg:w-10/12 rounded-b-full lg:rounded-r-full lg:rounded-b-none bg-[#0065659a] z-3'></div>
+
     </section>
 
     {

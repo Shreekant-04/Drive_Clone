@@ -76,7 +76,7 @@ function Preview({ preview, dataPreview }) {
             <button onClick={()=>{handleDownload(dataPreview.storedName,dataPreview.fileName)}}>
                 <img width={'25px'} src="Logo/Recent/downloadWhite.svg" alt="" />
             </button>
-            <button className="rounded-full border-[2px] w-[12%] mx-2 p-2 hover:scale-105 duration-200 flex items-center justify-evenly">
+            <button className="rounded-full w-full lg:w-[12%] border-[2px] mx-2 p-1 lg:p-2 hover:scale-105 duration-200 flex items-center justify-evenly">
                 <img src="Logo/Recent/share.svg" alt="" />
                 Share
 

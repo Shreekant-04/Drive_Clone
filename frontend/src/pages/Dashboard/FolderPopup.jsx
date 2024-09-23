@@ -54,7 +54,7 @@ const FolderPopup = ({ toggle }) => {
 
   return (
     <div className="w-[100vw] h-[100vh] fixed flex justify-center items-center z-50 bg-[#dfdcdc93] overflow-hidden font-inter">
-      <div ref={popRef} className="w-[70%] md:w-[50%] lg:w-[50%] h-fit lg:h-[50%] flex p-4 flex-col rounded-lg bg-white">
+      <div ref={popRef} className="w-[70%] md:w-[50%] lg:w-[30%] h-fit  flex p-4 flex-col rounded-lg bg-white">
         <div className="w-full flex justify-end">
           <button onClick={handleClose}>
             <svg
@@ -68,9 +68,14 @@ const FolderPopup = ({ toggle }) => {
             </svg>
           </button>
         </div>
-        <h2 className="text-lg lg:text-xl font-semibold mb-2 lg:mb-4 text-center">
-          Create a New Folder
+        <div className="flex gap-2 items-center mb-2 lg:mb-4">
+        <i  className="fa-solid fa-folder-plus text-teal-900 text-lg  lg:text-3xl "></i>
+        <h2 className="text-lg lg:text-xl font-semibold  ">
+          Create New Folder
         </h2>
+        </div>
+        
+        
         <input
           type="text"
           placeholder="Folder Name"

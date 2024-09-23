@@ -26,9 +26,9 @@ function Stats({ data ,data2}) {
   }, [data]);
 
   return (
-    <div className='lg:p-8 p-1 w-full h-[25%] lg:h-[20%] mt-40 md:mt-48 lg:mt-32 grid grid-cols-2 md:grid-cols-3 gap-3 lg:flex lg:justify-between lg:items-end font-inter'>
+    <div className='lg:p-8 p-1 w-full h-[25%] lg:h-[20%] mt-40 md:mt-48 lg:mt-32 grid grid-cols-2 md:grid-cols-3 gap-2 lg:flex lg:justify-between lg:items-end font-inter'>
       {datas.map((item, i) => (
-        <div key={i} className='bg-[#e7e7e763] lg:w-[24%] h-full lg:h-[100%] cursor-pointer rounded-lg md:rounded-3xl lg:rounded-[20px] p-2 md:p-3 lg:p-3 flex-col  hover:scale-105 duration-200 transition-all'>
+        <div key={i} className='bg-[#e7e7e763] lg:w-[24%] h-full lg:h-[100%] cursor-pointer rounded-lg md:rounded-3xl lg:rounded-[20px] p-2 md:p-3 lg:p-4 flex-col  hover:scale-105 duration-200 transition-all'>
           <div className=' flex flex-row gap-3 w-4/6 justify-between'>
             <img
               src={item.type === 'image' ? image : item.type === 'video' ? video : item.type === 'document' ? doc : other}
