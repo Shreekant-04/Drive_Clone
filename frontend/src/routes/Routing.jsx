@@ -14,8 +14,8 @@ const Routing = () => {
   return (
     <div>
       <Routes>
-        <Route path="/main" element={<Main />} />
-        <Route path="/" element={<Home/>} />
+        <Route path="/" element={<Main />} />
+        <Route path="/dashboard" element={<Home/>} />
         <Route path="/landing" element={<Landing />} />
         <Route path="/upload" element={<PopupUpload />} />
       </Routes>
