@@ -16,137 +16,57 @@ function Sidebar({data2,data}) {
  
 
   return (
-    <div className="sideBar w-[20%] font-inter top-24 p-2 h-full fixed overflow-y-auto">
+    <div className="sideBar w-[15%] font-inter  top-24 p-2 h-full fixed overflow-y-auto">
       <ul className="w-full flex flex-col items-center justify-center">
         <li className="listSideActive">
           <span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              height="24px"
-              viewBox="0 -960 960 960"
-              width="24px"
-              fill="none"
-              stroke="white"
-              strokeWidth="25"
-            >
-              <path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z" />
-            </svg>
+          <i class="fa-solid fa-house lg:mr-2"></i>
           </span>
-          <p className="w-[80%]  text-start p-1">Home</p>
+          <p className="w-[80%] hidden lg:block  text-start p-1">Home</p>
         </li>
         <li className="listSideNormal">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="24px"
-            viewBox="0 -960 960 960"
-            width="24px"
-            fill="none"
-            stroke="black"
-            strokeWidth="30"
-          >
-            <path d="M160-280h640v-240H160v240Zm520-60q25 0 42.5-17.5T740-400q0-25-17.5-42.5T680-460q-25 0-42.5 17.5T620-400q0 25 17.5 42.5T680-340Zm200-260H767l-80-80H273l-80 80H80l137-137q11-11 25.5-17t30.5-6h414q16 0 30.5 6t25.5 17l137 137ZM160-200q-33 0-56.5-23.5T80-280v-320h800v320q0 33-23.5 56.5T800-200H160Z" />
-          </svg>
-
-          <p className="w-[80%]  text-start p-1">My Drive</p>
+         
+          <i class="fa-solid fa-hard-drive  lg:mr-2"></i>
+          <p className="w-[80%] hidden lg:block  text-start p-1">My Drive</p>
         </li>
   
         <li className="listSideNormal">
           <span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              height="24px"
-              viewBox="0 -960 960 960"
-              width="24px"
-              fill="none"
-              stroke="black"
-              strokeWidth="30"
-            >
-              <path d="M680-80q-50 0-85-35t-35-85q0-6 3-28L282-392q-16 15-37 23.5t-45 8.5q-50 0-85-35t-35-85q0-50 35-85t85-35q24 0 45 8.5t37 23.5l281-164q-2-7-2.5-13.5T560-760q0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35q-24 0-45-8.5T598-672L317-508q2 7 2.5 13.5t.5 14.5q0 8-.5 14.5T317-452l281 164q16-15 37-23.5t45-8.5q50 0 85 35t35 85q0 50-35 85t-85 35Zm0-80q17 0 28.5-11.5T720-200q0-17-11.5-28.5T680-240q-17 0-28.5 11.5T640-200q0 17 11.5 28.5T680-160ZM200-440q17 0 28.5-11.5T240-480q0-17-11.5-28.5T200-520q-17 0-28.5 11.5T160-480q0 17 11.5 28.5T200-440Zm480-280q17 0 28.5-11.5T720-760q0-17-11.5-28.5T680-800q-17 0-28.5 11.5T640-760q0 17 11.5 28.5T680-720Zm0 520ZM200-480Zm480-280Z" />
-            </svg>
+          <i class="fa-solid fa-share-nodes lg:mr-2"></i>
           </span>
-          <p className="w-[80%]  text-start p-1">Share with me</p>
+          <p className="w-[80%] hidden lg:block   text-start p-1">Share with me</p>
         </li>
         <hr className="w-full my-2" />
         <li className="listSideNormal">
           <span>
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M8.00083 12.686L8.25908 12.8422L12.4091 15.3522L12.4092 15.3523C12.7888 15.582 13.2536 15.2445 13.1533 14.8133L12.0534 10.0935L11.9849 9.79969L12.2129 9.60213L15.8829 6.42213L15.8831 6.42198C16.2198 6.13048 16.0356 5.58303 15.6007 5.54844L15.598 5.54823L10.768 5.13822L10.4676 5.11272L10.3499 4.8351L8.45995 0.375099L8.45928 0.37353C8.29081 -0.0278301 7.70982 -0.0278301 7.54135 0.373529L7.54053 0.375472L5.65053 4.82547L5.53277 5.10274L5.23261 5.12822L0.402608 5.53822L0.399965 5.53844L0.399964 5.53844C-0.0349475 5.57303 -0.219164 6.12048 0.117567 6.41198L0.117743 6.41213L3.78774 9.59213L4.01574 9.78969L3.94727 10.0835L2.84732 14.8033L8.00083 12.686ZM8.00083 12.686L7.74231 12.8417M8.00083 12.686L7.74231 12.8417M7.74231 12.8417L3.59231 15.3417L3.59142 15.3423M7.74231 12.8417L3.59142 15.3423M3.59142 15.3423C3.21186 15.572 2.7472 15.2346 2.84727 14.8035L3.59142 15.3423Z"
-                stroke="black"
-              />
-            </svg>
+          <i class="fa-solid fa-star lg:mr-2"></i>
           </span>
-          <p className="w-[80%]  text-start p-1">Starred</p>
+          <p className="w-[80%] hidden lg:block  text-start p-1">Starred</p>
         </li>
         <li className="listSideNormal">
           <span>
-            <svg
-              width="20"
-              height="18"
-              viewBox="0 0 20 18"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M9.99366 12.3333H10.0012M9.99366 9.83333V5.66667M10.2587 1.5H9.74199C7.71199 1.5 6.69699 1.5 5.86699 1.96083C5.03616 2.42083 4.54366 3.25667 3.55783 4.92917L3.06616 5.7625C2.13366 7.345 1.66699 8.13583 1.66699 9C1.66699 9.86417 2.13366 10.655 3.06699 12.2375L3.55783 13.0708C4.54366 14.7433 5.03616 15.5792 5.86616 16.04C6.69699 16.5 7.71199 16.5 9.74116 16.5H10.2595C12.2887 16.5 13.3037 16.5 14.1345 16.04C14.9645 15.5792 15.457 14.7433 16.4428 13.0708L16.9345 12.2375C17.867 10.655 18.3337 9.86417 18.3337 9C18.3337 8.13583 17.867 7.345 16.9337 5.7625L16.4428 4.92917C15.457 3.25667 14.9645 2.42083 14.1345 1.96083C13.3037 1.5 12.2887 1.5 10.2587 1.5Z"
-                stroke="black"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+          <i class="fa-solid fa-triangle-exclamation lg:mr-2"></i>
           </span>
-          <p className="w-[80%]  text-start p-1">Spam</p>
+          <p className="w-[80%] hidden lg:block  text-start p-1">Spam</p>
         </li>
         <li className="listSideNormal">
           <span>
-            <svg
-              width="14"
-              height="18"
-              viewBox="0 0 14 18"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M12 6.5L11.3 13.4983C11.1942 14.5592 11.1417 15.0892 10.9 15.49C10.688 15.8428 10.3763 16.125 10.0042 16.3008C9.58167 16.5 9.05 16.5 7.98333 16.5H6.01667C4.95083 16.5 4.41833 16.5 3.99583 16.3C3.62337 16.1243 3.31134 15.8421 3.09917 15.4892C2.85917 15.0892 2.80583 14.5592 2.69917 13.4983L2 6.5M8.25 11.9167V7.75M5.75 11.9167V7.75M0.75 4.41667H4.59583M4.59583 4.41667L4.9175 2.19C5.01083 1.785 5.3475 1.5 5.73417 1.5H8.26583C8.6525 1.5 8.98833 1.785 9.0825 2.19L9.40417 4.41667M4.59583 4.41667H9.40417M9.40417 4.41667H13.25"
-                stroke="black"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+          <i class="fa-solid fa-trash lg:mr-2"></i>
           </span>
-          <p className="w-[80%]  text-start p-1">Trash</p>
+          <p className="w-[80%] hidden lg:block  text-start p-1">Trash</p>
         </li>
       </ul>
       <hr />
-      <div className="storage p-2 w-full listSideNormal">
-        <div className="flex-col items-center w-[90%] justify-center">
+      <div className="storage  lg:p-2 w-full listSideNormal">
+        <div className="flex-col items-center w-[90%] justify-center hidden lg:block">
           <li className="listSideNormal hover:bg-transparent transition-all duration-100">
             <span>
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 20 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M9.16672 4.16668C8.55457 4.16654 7.94992 4.30128 7.39576 4.56131C6.84159 4.82134 6.35153 5.20029 5.96042 5.67119C5.56931 6.1421 5.28677 6.69339 5.13288 7.28588C4.97899 7.87836 4.95754 8.49747 5.07005 9.09918L5.21588 9.88418L4.43755 10.0634C3.83994 10.2023 3.31427 10.5561 2.96056 11.0575C2.60685 11.5588 2.44978 12.1727 2.51925 12.7823C2.58871 13.3919 2.87985 13.9547 3.33728 14.3636C3.7947 14.7726 4.38649 14.999 5.00005 15H14.1667C14.6045 14.9964 15.0372 14.9065 15.4402 14.7356C15.8432 14.5647 16.2086 14.3161 16.5156 14.004C16.8225 13.6918 17.065 13.3223 17.2291 12.9165C17.3932 12.5107 17.4758 12.0765 17.4721 11.6388C17.4685 11.201 17.3786 10.7683 17.2077 10.3653C17.0368 9.96227 16.7882 9.59686 16.4761 9.28992C16.164 8.98298 15.7944 8.74053 15.3886 8.5764C14.9828 8.41227 14.5486 8.32968 14.1109 8.33335L13.3942 8.34502L13.2759 7.63835C13.1116 6.66743 12.6088 5.78605 11.8566 5.15054C11.1044 4.51504 10.1514 4.16648 9.16672 4.16668ZM3.33338 8.33335C3.33191 6.92788 3.83793 5.56914 4.75837 4.507C5.67881 3.44487 6.95178 2.75076 8.34317 2.55234C9.73456 2.35391 11.1508 2.66452 12.3315 3.42702C13.5121 4.18953 14.3778 5.35266 14.7692 6.70252C16.0322 6.85805 17.1884 7.48923 18.0023 8.46748C18.8162 9.44573 19.2265 10.6975 19.1497 11.9677C19.0729 13.2379 18.5147 14.4311 17.5889 15.3041C16.6631 16.1772 15.4393 16.6645 14.1667 16.6667H5.00005C4.04145 16.6672 3.11198 16.3372 2.36835 15.7323C1.62472 15.1273 1.11242 14.2845 0.917819 13.3459C0.723219 12.4072 0.858223 11.4302 1.30007 10.5795C1.74191 9.72879 2.46358 9.05646 3.34338 8.67585C3.3367 8.56181 3.33336 8.44759 3.33338 8.33335Z"
-                  fill="black"
-                />
-              </svg>
+            <i class="fa-solid  fa-cloud mr-0 lg:mr-2"></i>
             </span>
             <p className="w-[80%]  text-start p-1">Storage</p>
           </li>
           <ProgressBar total={data2.total} available={available} />
-          <p className="p-2 mx-2">{available} MB OF {data2.total} MB</p>
+          <p className="p-2 mx-2 ">{available} MB OF {data2.total} MB</p>
         </div>
       </div>
     </div>

@@ -227,9 +227,12 @@ function Recent({data,onFolderClick,selectedFolder,handleGoBack,preview}) {
         )}
 
         {data.length === 0 && folders.length === 0 && (
-          <p className="text-center w-full">
+          <div className="flex justify-center items-center text-gray-400  ">
+          <i class="fa-solid fa-triangle-exclamation mr-2 "></i>
+          <p className="">
             No recent files or folders available.
           </p>
+          </div>
         )}
       </div>
     </>

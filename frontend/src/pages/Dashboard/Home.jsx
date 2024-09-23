@@ -64,7 +64,7 @@ const Home = () => {
   return (
     <div>
       <Navbar />
-      <div className="flex w-[100vw] h-[100vh] font-inter">
+      <div className="flex  lg:w-[100vw] h-[100vh] font-inter">
         <Sidebar data={data} data2={data2} />
         <HomePage
           open={toggleUpload}
