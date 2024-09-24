@@ -3,10 +3,10 @@ import api from "../../utils/api";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-function Navbar() {
+function Navbar({profile}) {
   const navigate = useNavigate();
   const [token, setToken] = useState(localStorage.getItem("token") || "");
-
+  const [data,setData] = useState([])
   useEffect(() => {
     const verifyUser = async () => {
       if (token) {
@@ -16,6 +16,9 @@ function Navbar() {
               Authorization: `Bearer ${token}`,
             },
           });
+
+         setData(res.data.data[0])
+         profile(false,res.data.data[0])
 
         
         } catch (error) {
@@ -59,9 +62,8 @@ function Navbar() {
         </div>
         <div className="w-5/12 flex justify-end">
           <div className="flex justify-evenly w-2/5">
-            <img src="/Logo/notification.svg" alt="Notifications" />
-            <img src="/Logo/settings.svg" alt="Settings" />
-            <img src="/Logo/profile.svg" alt="Profile" />
+            <img src="/Logo/logout.svg" alt="Settings" />
+            <img src="/Logo/profile.svg" alt="Profile" onClick={()=> profile(true,data)} />
           </div>
         </div>
       </div>

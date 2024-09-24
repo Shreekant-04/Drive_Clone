@@ -4,15 +4,17 @@ import api from "../../utils/api";
 import gsap from "gsap";
 import ReactPlayer from "react-player";
 import { PDFViewer, PdfFocusProvider } from '@llamaindex/pdf-viewer';
-
+import { useNavigate } from "react-router-dom"; // For redirecting to login
 
 function Viewer({ fileName }) {
   const [fileBlob, setFileBlob] = useState(null);
   const [fileType, setFileType] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [token,setToken] = useState(localStorage.getItem('token'))
+  const [textContent, setTextContent] = useState(""); // State for text content
   const previRef = useRef();
+  const [token,setToken] = useState(localStorage.getItem("token")||null)
+  const navigate = useNavigate(); // For navigation
 
   useEffect(() => {
     const fetchFile = async () => {
@@ -20,16 +22,32 @@ function Viewer({ fileName }) {
         const response = await axios.get(`${api}files/preview/${fileName}`, {
           responseType: "blob",
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${token}`,
           },
         });
 
         const blob = new Blob([response.data]);
         setFileBlob(blob);
-        setFileType(response.data.type.split("/")[0]);
+        setFileType(response.data.type); // Store full MIME type
+
+        // Check if it's a text file and read its content
+        if (response.data.type.startsWith("text/")) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            setTextContent(reader.result); // Set text content
+          };
+          reader.readAsText(blob); // Read as text
+        }
       } catch (error) {
         console.error("Error fetching file:", error);
-        setError("Failed to load file preview.");
+
+        if (error.response?.status === 401 || error.response?.status === 400) {
+          setError("Please login to access this file.");
+        } else if (error.response?.status === 403) {
+          setError("You do not have permission to access this file.");
+        } else {
+          setError("Failed to load file preview. Please try again.");
+        }
       } finally {
         setLoading(false);
       }
@@ -38,7 +56,6 @@ function Viewer({ fileName }) {
     fetchFile();
 
     return () => {
-      // Cleanup to revoke object URL
       if (fileBlob) {
         URL.revokeObjectURL(fileBlob);
       }
@@ -53,60 +70,77 @@ function Viewer({ fileName }) {
         { scale: 1, duration: 0.3, ease: "power3.out" }
       );
     }
-  }, [fileType]); 
-  
-
+  }, [fileType]);
 
   if (loading) {
-    return <div className="w-full h-full flex justify-center items-center"> 
-         <img className="w-[100px]" src="/Logo/loading.gif" alt="" />
-    </div>;
+    return (
+      <div className="w-full h-full flex justify-center items-center">
+        <img className="w-[100px]" src="/Logo/loading.gif" alt="Loading..." />
+        <p className="ml-2">Loading file preview...</p>
+      </div>
+    );
   }
 
   if (error) {
-    return<div className="w-full h-full flex justify-center items-center"> 
-    <p>{error}</p>
-</div>;
+    return (
+      <div className="w-full h-full flex justify-center items-center">
+        <div className="text-center">
+          <p>{error}</p>
+          {/* If the user is not logged in, offer a login option */}
+          {error === "Please login to access this file." && (
+            <button
+              onClick={() => navigate("/dashboard")}
+              className="mt-4 px-4 py-2 bg-[#004646] text-white rounded-full"
+            >
+              Login
+            </button>
+          )}
+        </div>
+      </div>
+    );
   }
 
   const fileUrl = URL.createObjectURL(fileBlob);
-  const file = {
-    id: 'sample-document',
-    url: fileUrl,
-  };
+
   return (
-    <div ref={previRef} className="w-[80%] bg-white h-[80%] rounded-lg my-10 overflow-hidden flex justify-center items-center">
+    <div ref={previRef} className="w-[80%] bg-white h-[80%] rounded-lg my-10 overflow-hidden flex justify-center items-center text-black">
       <div className="overflow-y-scroll w-full flex justify-center items-center">
         {/* Image Preview */}
-        {fileType === "image" && <img src={fileUrl} alt="preview" />}
+        {fileType.startsWith("image/") && (
+          <img src={fileUrl} alt="preview" style={{ maxWidth: "100%", maxHeight: "100%" }} />
+        )}
 
         {/* Video Preview */}
-        {fileType === "video" && (
+        {fileType.startsWith("video/") && (
           <ReactPlayer 
             url={fileUrl}
             controls
             playing={false}
             loop={false}
+            style={{ maxWidth: "100%", maxHeight: "100%" }}
           />
         )}
 
         {/* PDF Preview */}
-        {fileType === "application" && (
+        {fileType === "application/pdf" && (
           <PdfFocusProvider>
-            <PDFViewer file={{url : fileUrl}} className="w-full h-full" />
+            <PDFViewer file={{ url: fileUrl }} className="w-full h-full" />
           </PdfFocusProvider>
         )}
+
+        {/* Text File Preview */}
+        {fileType.startsWith("text/") && (
+          <div className="w-full h-[50vh] p-4 overflow-y-auto">
+            <pre>{textContent}</pre>
+          </div>
+        )}
+
         {/* Fallback for other file types */}
-        {fileType !== "image" &&
-          fileType !== "video" &&
-          fileType !== "application" && (
-            <iframe
-              src={fileUrl}
-              title="File preview"
-              width="100%"
-              height="600px"
-            />
-          )}
+        {!fileType.startsWith("image/") && !fileType.startsWith("video/") && fileType !== "application/pdf" && !fileType.startsWith("text/") && (
+          <div className="w-full h-full flex justify-center items-center">
+            <p>Unsupported file type for preview.</p>
+          </div>
+        )}
       </div>
     </div>
   );

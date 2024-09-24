@@ -5,7 +5,7 @@ import api from "../../utils/api";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-function Recent({data,onFolderClick,selectedFolder,handleGoBack,preview}) {
+function Recent({data,onFolderClick,selectedFolder,handleGoBack,preview,open}) {
   const [fileTypes, setFileTypes] = useState({});
   const [folders, setFolders] = useState([]);
   const [token, setToken] = useState(localStorage.getItem("token") || "");
@@ -77,7 +77,9 @@ function Recent({data,onFolderClick,selectedFolder,handleGoBack,preview}) {
         {
           autoClose: 1000, // Duration in milliseconds
         }
+        
       );
+      open(false)
     } catch (error) {
       console.error("Error deleting file:", error);
       toast.error("Failed to delete the file.");
