@@ -4,7 +4,6 @@ const File = require("../models/File");
 // Create a folder
 exports.createFolder = async (req, res) => {
   const { folderName } = req.body;
-  console.log(folderName);
 
   const userId = req.user.id;
 
@@ -18,13 +17,12 @@ exports.createFolder = async (req, res) => {
   }
 };
 
-
 // Get all folders for the user
 exports.getFolders = async (req, res) => {
   try {
     const folders = await Folder.find({ userId: req.user.id });
     if (!folders || folders.length === 0) {
-      return res.status(404).json({ message: "No folders found" });
+      return res.status(200).json({ message: "No folders found" });
     }
     res.status(200).json(folders);
   } catch (error) {
@@ -32,6 +30,7 @@ exports.getFolders = async (req, res) => {
     res.status(500).json({ message: "Failed to retrieve folders", error });
   }
 };
+
 
 
 // Get files in a selected folder
@@ -59,5 +58,23 @@ exports.getFilesInFolder = async (req, res) => {
   } catch (error) {
     console.error("Error retrieving files in folder:", error);
     res.status(500).json({ message: "Failed to retrieve files", error });
+  }
+};
+
+// Delete folder and its files
+exports.deleteFolder = async (req, res) => {
+  const { folderId } = req.params;
+
+  try {
+    // Delete all files in the folder
+    await File.deleteMany({ folderId: folderId });
+
+    // Delete the folder
+    await Folder.findByIdAndDelete(folderId);
+
+    res.status(200).json({ message: "Folder and files deleted successfully!" });
+  } catch (error) {
+    console.error("Error deleting folder:", error);
+    res.status(500).json({ message: "Failed to delete folder and files." });
   }
 };

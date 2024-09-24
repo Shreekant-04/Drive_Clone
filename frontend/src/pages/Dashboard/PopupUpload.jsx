@@ -4,7 +4,7 @@ import axios from "axios";
 import ProgressBar from "../Common/ProgressBar";
 import api from "../../utils/api";
 
-const PopupUpload = ({ open }) => {
+const PopupUpload = ({ open, selectedFolderId, setSelectedFolderId }) => {
   const popRef = useRef();
   const fileInputRef = useRef();
   const [progress, setProgress] = useState(0);
@@ -70,6 +70,7 @@ const PopupUpload = ({ open }) => {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("fileName", file.name);
+    selectedFolderId && formData.append("folderId", selectedFolderId || null);
 
     try {
       setUploading(true);
@@ -83,7 +84,7 @@ const PopupUpload = ({ open }) => {
             (progressEvent.loaded * 100) / progressEvent.total
           );
           setProgress(percentCompleted);
-    
+          setSelectedFolderId(null);
         },
       });
       setUploading(false);

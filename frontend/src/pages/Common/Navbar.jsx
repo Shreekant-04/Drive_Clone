@@ -7,6 +7,7 @@ function Navbar({profile}) {
   const navigate = useNavigate();
   const [token, setToken] = useState(localStorage.getItem("token") || "");
   const [data,setData] = useState([])
+
   useEffect(() => {
     const verifyUser = async () => {
       if (token) {

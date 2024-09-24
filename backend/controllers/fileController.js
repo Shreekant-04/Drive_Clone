@@ -4,6 +4,7 @@ const Limit = require("../models/Limitation");
 const User = require("../models/User");
 
 exports.uploadFile = (req, res) => {
+  
   upload.single("file")(req, res, async (err) => {
     if (err) {
       return res.status(500).json({ error: err.message });
@@ -14,7 +15,7 @@ exports.uploadFile = (req, res) => {
     }
 
     const { filename: storedName, mimetype: type, size } = req.file;
-    const { fileName } = req.body;
+    const { fileName, folderId } = req.body;
     const userId = req.user.id;
     const anyone = false;
 
@@ -26,6 +27,7 @@ exports.uploadFile = (req, res) => {
         size,
         userId,
         anyone,
+        folderId,
       });
 
       await file.save();

@@ -5,7 +5,15 @@ import api from "../../utils/api";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-function Recent({data,onFolderClick,selectedFolder,handleGoBack,preview,open}) {
+function Recent({
+  data,
+  onFolderClick,
+  selectedFolder,
+  handleGoBack,
+  preview,
+  open,
+  handleUpload,
+}) {
   const [fileTypes, setFileTypes] = useState({});
   const [folders, setFolders] = useState([]);
   const [token, setToken] = useState(localStorage.getItem("token") || "");
@@ -71,18 +79,36 @@ function Recent({data,onFolderClick,selectedFolder,handleGoBack,preview,open}) {
           Authorization: `Bearer ${token}`,
         },
       });
-  
+
       // Show a success toast notification
-      toast.success(`${oName} deleted successfully!`,
-        {
-          autoClose: 1000, // Duration in milliseconds
-        }
-        
-      );
-      open(false)
+      toast.success(`${oName} deleted successfully!`, {
+        autoClose: 1000, // Duration in milliseconds
+      });
+      open(false);
     } catch (error) {
       console.error("Error deleting file:", error);
       toast.error("Failed to delete the file.");
+    }
+  };
+
+  const handleDelete = async (name ,folderId) => {
+    try {
+      const response = await fetch(`${api}folders/${folderId}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        setFolders((prevFolders) =>
+          prevFolders.filter((folder) => folder._id !== folderId)
+        );
+        toast.success(`${name} deleted successfully!`, {
+          autoClose: 1000, // Duration in milliseconds
+        });
+      } else {
+        toast.error("Failed to delete the folder.");
+      }
+    } catch (error) {
+      console.error("Error deleting folder:", error);
     }
   };
 
@@ -96,20 +122,101 @@ function Recent({data,onFolderClick,selectedFolder,handleGoBack,preview,open}) {
         {selectedFolder && (
           <button className="flex gap-2" onClick={handleGoBack}>
             <div className="flex items-center gap-2">
-            <i className="fa-solid fa-chevron-left"></i> 
-            <p>Back</p>
+              <i className="fa-solid fa-chevron-left"></i>
+              <p>Back</p>
             </div>
-            
           </button>
         )}
         <h1 className="text-xl w-full text-center  font-[400]">
           {selectedFolder ? selectedFolder.folderName : ""}
-        </h1>
+        </h1>{" "}
+        <button
+          className="btnAction2"
+          onClick={() => handleUpload(selectedFolder._id)}
+        >
+          <p className="hidden lg:block ">Upload</p>
+          <span>
+            <i className="fa-solid fa-arrow-up-from-bracket"></i>
+          </span>
+        </button>
       </div>
       <div className="w-full px-2 py-6 flex flex-col justify-start">
-        {selectedFolder && data.length === 0 && (
-          <p className="text-center w-full ml-8 text-gray-400">This folder is empty.</p>
+        {selectedFolder && data.length === 0 ? (
+          <div className="flex flex-col gap-1 justify-center items-center text-center">
+            <p className="text-center w-full ml-8 text-gray-400">
+              This folder is empty.
+            </p>
+          </div>
+        ) : (
+          selectedFolder &&
+          data.map((item, i) => (
+            <div
+              key={i}
+              className="flex w-full cursor-pointer justify-between p-3 my-2 items-center bg-[#e7e7e763] text-[12px] font-inter rounded-[16px] hover:bg-gray-200 "
+            >
+              <div className="itemName flex items-center text-center justify-start w-[15%]">
+                <img
+                  className=""
+                  src={
+                    fileTypes[item.fileName] === "Document"
+                      ? "/Logo/Recent/doc.svg"
+                      : fileTypes[item.fileName] === "Video"
+                      ? "/Logo/Recent/video.svg"
+                      : fileTypes[item.fileName] === "Image"
+                      ? "/Logo/Recent/image.svg"
+                      : "/Logo/Recent/other.svg"
+                  }
+                  alt=""
+                />
+                <p
+                  onClick={() => {
+                    preview(true, item);
+                  }}
+                  className="mx-2 hover:underline "
+                >
+                  {item.fileName.substring(0, 20)}
+                </p>
+              </div>
+              <div className="size w-[10%] hidden lg:block">
+                <p>{(item.size / 1024 / 1024).toFixed(1)} MB</p>
+              </div>
+              <div className="type w-[10%] hidden lg:block">
+                <p>
+                  {fileTypes[item.fileName] === "Document"
+                    ? "Document"
+                    : fileTypes[item.fileName] === "Video"
+                    ? "Video"
+                    : fileTypes[item.fileName] === "Image"
+                    ? "Image"
+                    : "Other"}
+                </p>
+              </div>
+              <div className="accessTime w-[15%] hidden lg:block">
+                <p>Last Opened {setTime(item.lAccess) || ""}</p>
+              </div>
+              <div className="accessName w-[10%] hidden lg:block">
+                <p>{item.lName}</p>
+              </div>
+              <div className="menuBtn flex items-center gap-2 lg:gap-4 justify-evenly w-[20%] lg:w-[10%]">
+                <i
+                  className="fa-solid fa-download  text-gray-600"
+                  onClick={() => downloadFile(item.storedName, item.fileName)}
+                ></i>
+
+                <i className="fa-solid fa-pen  text-gray-600"></i>
+
+                <span>
+                  <i
+                    className="fa-solid fa-trash-can  text-gray-600"
+                    onClick={() => delFile(item.storedName, item.fileName)}
+                  ></i>
+                </span>
+              </div>
+            </div>
+          ))
         )}
+
+        {/* All Folders */}
         {folders.length > 0 && !selectedFolder && (
           <>
             <h2 className="text-xl mb-2 font-[400]">Folders</h2>
@@ -126,9 +233,12 @@ function Recent({data,onFolderClick,selectedFolder,handleGoBack,preview,open}) {
                     alt="Folder"
                   />
                   <p className="mx-2">{folder.folderName}</p>
-                </div >
+                </div>
                 <div className="size w-[10%] hidden lg:block">
-                  <p>{folder.fileIds.length} Items</p>
+                  <p>
+                    {data.filter((item) => item.folderId === folder._id).length}{" "}
+                    Items
+                  </p>
                 </div>
                 <div className="type w-[10%] hidden lg:block">
                   <p>Folder</p>
@@ -139,82 +249,102 @@ function Recent({data,onFolderClick,selectedFolder,handleGoBack,preview,open}) {
                 <div className="accessName w-[10%]">
                   <p>{folder.creatorName}</p>
                 </div>
+                <i
+                  className="fa-solid fa-trash-can  text-gray-600"
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevent onClick for folder
+                    handleDelete(folder.folderName, folder._id);
+                  }}
+                ></i>
                 <div className="menuBtn flex justify-evenly w-[5%]">
-                <i className="fa-solid fa-ellipsis-vertical  text-gray-600"></i>
+                  <i className="fa-solid fa-ellipsis-vertical  text-gray-600"></i>
                 </div>
               </div>
             ))}
           </>
         )}
 
-        {data.length > 0 && (
+        {/* globle files */}
+        {data.length > 0 &&
+        data.filter((item) => item.folderId === null).length > 0 ? (
           <>
             <h2 className="text-xl mb-2 mt-4 font-[400]">Files</h2>
-            {data.map((item, i) => (
-              <div
-                key={i}
-                className="flex w-full cursor-pointer justify-between p-3 my-2 items-center bg-[#e7e7e763] text-[12px] font-inter rounded-[16px] hover:bg-gray-200 "
-              >
-                <div className="itemName flex items-center text-center justify-start w-[15%]">
-                  <img
-                    className=""
-                    src={
-                      fileTypes[item.fileName] === "Document"
-                        ? "/Logo/Recent/doc.svg"
+            {/* Filter files to show only those with folderId: null */}
+            {data
+              .filter((item) => item.folderId === null)
+              .map((item, i) => (
+                <div
+                  key={i}
+                  className="flex w-full cursor-pointer justify-between p-3 my-2 items-center bg-[#e7e7e763] text-[12px] font-inter rounded-[16px] hover:bg-gray-200 "
+                >
+                  <div className="itemName flex items-center text-center justify-start w-[15%]">
+                    <img
+                      src={
+                        fileTypes[item.fileName] === "Document"
+                          ? "/Logo/Recent/doc.svg"
+                          : fileTypes[item.fileName] === "Video"
+                          ? "/Logo/Recent/video.svg"
+                          : fileTypes[item.fileName] === "Image"
+                          ? "/Logo/Recent/image.svg"
+                          : "/Logo/Recent/other.svg"
+                      }
+                      alt=""
+                    />
+                    <p
+                      onClick={() => {
+                        preview(true, item);
+                      }}
+                      className="mx-2 hover:underline "
+                    >
+                      {item.fileName.substring(0, 20)}
+                    </p>
+                  </div>
+                  <div className="size w-[10%] hidden lg:block">
+                    <p>{(item.size / 1024 / 1024).toFixed(1)} MB</p>
+                  </div>
+                  <div className="type w-[10%] hidden lg:block">
+                    <p>
+                      {fileTypes[item.fileName] === "Document"
+                        ? "Document"
                         : fileTypes[item.fileName] === "Video"
-                        ? "/Logo/Recent/video.svg"
+                        ? "Video"
                         : fileTypes[item.fileName] === "Image"
-                        ? "/Logo/Recent/image.svg"
-                        : "/Logo/Recent/other.svg"
-                    }
-                    alt=""
-                  />
-                  <p  onClick={() => {
-                  preview(true,item);
-                }} className="mx-2 hover:underline ">{item.fileName.substring(0, 20)}</p>
-                </div>
-                <div className="size w-[10%] hidden lg:block">
-                  <p>{(item.size / 1024 / 1024).toFixed(1)} MB</p>
-                </div>
-                <div className="type w-[10%] hidden lg:block">
-                  <p>
-                    {fileTypes[item.fileName] === "Document"
-                      ? "Document"
-                      : fileTypes[item.fileName] === "Video"
-                      ? "Video"
-                      : fileTypes[item.fileName] === "Image"
-                      ? "Image"
-                      : "Other"}
-                  </p>
-                </div>
-                <div className="accessTime w-[15%] hidden lg:block">
-                  <p>Last Opened {setTime(item.lAccess) || ""}</p>
-                </div>
-                <div className="accessName w-[10%] hidden lg:block">
-                  <p>{item.lName}</p>
-                </div>
-                <div className="menuBtn flex items-center gap-2 lg:gap-4 justify-evenly w-[20%] lg:w-[10%]">
-                <i className="fa-solid fa-download  text-gray-600"
-                 onClick={() => downloadFile(item.storedName, item.fileName)}></i>
-                  
-                  <i className="fa-solid fa-pen  text-gray-600"></i>
+                        ? "Image"
+                        : "Other"}
+                    </p>
+                  </div>
+                  <div className="accessTime w-[15%] hidden lg:block">
+                    <p>Last Opened {setTime(item.lAccess) || ""}</p>
+                  </div>
+                  <div className="accessName w-[10%] hidden lg:block">
+                    <p>{item.lName}</p>
+                  </div>
+                  <div className="menuBtn flex items-center gap-2 lg:gap-4 justify-evenly w-[20%] lg:w-[10%]">
+                    <i
+                      className="fa-solid fa-download  text-gray-600"
+                      onClick={() =>
+                        downloadFile(item.storedName, item.fileName)
+                      }
+                    ></i>
 
-                  <span>
-                <i className="fa-solid fa-trash-can  text-gray-600"
-                 onClick={()=> delFile(item.storedName, item.fileName)}></i>
-                  </span>
+                    <i className="fa-solid fa-pen  text-gray-600"></i>
+
+                    <span>
+                      <i
+                        className="fa-solid fa-trash-can  text-gray-600"
+                        onClick={() => delFile(item.storedName, item.fileName)}
+                      ></i>
+                    </span>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </>
-        )}
+        ) : null}
 
         {data.length === 0 && folders.length === 0 && (
           <div className="flex justify-center items-center text-gray-400 mt-3 ">
-          <i className="fa-solid fa-triangle-exclamation mr-2 "></i>
-          <p className="">
-            No recent files or folders available.
-          </p>
+            <i className="fa-solid fa-triangle-exclamation mr-2 "></i>
+            <p className="">No recent files or folders available.</p>
           </div>
         )}
       </div>

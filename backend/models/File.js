@@ -7,17 +7,19 @@ const fileSchema = new mongoose.Schema({
   size: { type: Number, required: true },
   lAccess: { type: Date, default: Date.now },
   lName: { type: String, required: false },
-  folderId: { type: mongoose.Schema.Types.ObjectId, ref: "Folder" },
+  folderId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Folder",
+    default: null,
+  },
   userId: { type: mongoose.Schema.Types.ObjectId, required: true },
-  anyone:{type:Boolean},
-  shared:[
+  anyone: { type: Boolean, default: false },
+  shared: [
     {
-      userId:{type:String},
-      email: {type:String}
-
-    }
-    
-  ]
+      userId: { type: String },
+      email: { type: String },
+    },
+  ],
 });
 
 const File = mongoose.model("File", fileSchema);

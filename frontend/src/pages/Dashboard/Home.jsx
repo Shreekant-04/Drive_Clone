@@ -13,6 +13,7 @@ import SharePopup from "../Common/SharePopup";
 
 const Home = () => {
   const [isOpen, setOpen] = useState(false);
+  const [selectedFolderID, setSelectedFolderId] = useState(null);
   const [isPreview, setPreview] = useState(false);
   const [isFolderOpen, setFolderOpen] = useState(false);
   const [token, setToken] = useState(localStorage.getItem("token") || "");
@@ -22,7 +23,8 @@ const Home = () => {
   const [previwData, setPreviewData] = useState("");
   const [isProfile, setProfile] = useState(false);
   const [isEdit, setEdit] = useState(false);
-  const [isShared,setShared] = useState(false)
+  const [isShared, setShared] = useState(false);
+  
 
   const fetchData = async () => {
     if (token) {
@@ -55,7 +57,8 @@ const Home = () => {
   }, [token]);
 
   // Toggle the file upload popup and trigger re-fetch if closed
-  const toggleUpload = (param) => {
+  const toggleUpload = (param , id) => {
+    setSelectedFolderId(id);
     setOpen(param);
 
     if (!param) {
@@ -91,7 +94,7 @@ const Home = () => {
   return (
     <div>
       <Navbar profile={toggleProfile} />
-    <div className="flex  lg:w-[100vw] h-[100vh] font-inter">
+      <div className="flex  lg:w-[100vw] h-[100vh] font-inter">
         {isProfile ? (
           <Profile
             data={userData}
@@ -101,7 +104,6 @@ const Home = () => {
         ) : (
           <Sidebar data={data} data2={data2} />
         )}
-
         <HomePage
           open={toggleUpload}
           data={data}
@@ -111,11 +113,23 @@ const Home = () => {
           preview={togglePreview}
         />
         {isEdit && <ProfilePopup open={toggleEdit} data={userData} />}{" "}
-        {isOpen && <PopupUpload open={toggleUpload} />}{" "}
+        {isOpen && (
+          <PopupUpload
+            open={toggleUpload}
+            selectedFolderId={selectedFolderID}
+            setSelectedFolderId={setSelectedFolderId}
+          />
+        )}{" "}
         {isFolderOpen && <FolderPopup toggle={toggleFolder} />}{" "}
-        {isShared && <SharePopup toggleShared={toggleShared} dataPreview={previwData}  />}{" "}
+        {isShared && (
+          <SharePopup toggleShared={toggleShared} dataPreview={previwData} />
+        )}{" "}
         {isPreview && (
-          <Preview preview={togglePreview} dataPreview={previwData} toggleShared={toggleShared} />
+          <Preview
+            preview={togglePreview}
+            dataPreview={previwData}
+            toggleShared={toggleShared}
+          />
         )}{" "}
       </div>
     </div>

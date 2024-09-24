@@ -87,7 +87,7 @@ function Profile({ data, profile, toggleEdit }) {
       />
       <div className="overflow-hidden">
         <div ref={textRef} className="text-center">
-          <p className="font-[800]">{data.name || "YOUR NAME"}</p>
+          <p className="font-[800] text-black">{data.name || "YOUR NAME"}</p>
           <p>{data.email}</p>
         </div>
       </div>

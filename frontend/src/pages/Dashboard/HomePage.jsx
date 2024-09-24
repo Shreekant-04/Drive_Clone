@@ -28,20 +28,26 @@ function HomePage({ open, data, data2, isFolderOpen, toggleFolder, preview }) {
     setFolderFiles([]); // Clear folder files
   };
 
+    const handleUpload = (folderId) => {
+      open(true, folderId); // Pass the folder ID to the open function
+    };
+
   return (
     <div className="font-inter absolute top-5 p-2 left-16 md:left-32 lg:top-20  lg:left-56 w-[80%] h-[100%]">
       <div className="flex  justify-evenly items-center  w-[80%] h-[10%] md:h-[7%] lg:h-[15%] bg-white top-24  z-10 fixed ">
-        <h1 className="text-lg lg:text-2xl w-[70%] lg:w-[75%] font-[400] ">Welcome To Drive</h1>
+        <h1 className="text-lg lg:text-2xl w-[70%] lg:w-[75%] font-[400] ">
+          Welcome To Drive
+        </h1>
         <button className="btnAction1" onClick={toggleFolder}>
           <p className="hidden lg:block">Create</p>
           <span>
-          <i className="fa-solid fa-plus  "></i>
+            <i className="fa-solid fa-plus  "></i>
           </span>
         </button>
         <button className="btnAction2" onClick={() => open(true)}>
-        <p className="hidden lg:block ">Upload</p>
+          <p className="hidden lg:block ">Upload</p>
           <span>
-          <i className="fa-solid fa-arrow-up-from-bracket"></i>
+            <i className="fa-solid fa-arrow-up-from-bracket"></i>
           </span>
         </button>
       </div>
@@ -54,6 +60,7 @@ function HomePage({ open, data, data2, isFolderOpen, toggleFolder, preview }) {
         preview={preview}
         data2={data2}
         open={open}
+        handleUpload={handleUpload}
       />
       {isFolderOpen && <FolderPopup toggle={toggleFolder} />}
     </div>
