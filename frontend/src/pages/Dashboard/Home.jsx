@@ -91,7 +91,7 @@ const Home = () => {
   return (
     <div>
       <Navbar profile={toggleProfile} />
-      <div className="flex w-[100vw] h-[100vh] font-inter">
+    <div className="flex  lg:w-[100vw] h-[100vh] font-inter">
         {isProfile ? (
           <Profile
             data={userData}
@@ -101,6 +101,7 @@ const Home = () => {
         ) : (
           <Sidebar data={data} data2={data2} />
         )}
+
         <HomePage
           open={toggleUpload}
           data={data}

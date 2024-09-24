@@ -2,10 +2,11 @@ import React from "react";
 
 const Hero = () => {
   return (
-    <div className="page1 bg-gray-800 min-h-screen w-full p-2">
+    <div className="page1 bg-gray-800  w-full p-2">
       <nav className="flex justify-between items-center h-[70px] mx-6 sm:mx-8 md:mx-12">
-        <div className="logo">
-          <img src="logo121.png" alt="drive-logo" />
+      <div className="flex justify-start items-center mr-4 lg:mr-0 w-1/12 lg:w-2/12">
+          <img  src="/Logo/logowhite.svg" alt="Logo" />
+          <p className="font-roboto text-white text-2xl lg:text-4xl font-bold">rive</p>
         </div>
         <div className="hidden md:flex text-white">
           <a
@@ -40,10 +41,10 @@ const Hero = () => {
           </a>
         </div>
         <div className="flex">
-          <button className="bg-white text-teal-900 text-sm sm:text-base px-4 sm:px-6 py-1 sm:py-2 mx-1 sm:mx-2 rounded">
+          <button className="bg-white text-teal-900 text-sm sm:text-base px-3 sm:px-6 py-1 sm:py-2 mx-1 sm:mx-2 rounded">
             Sign in
           </button>
-          <button className="bg-teal-900 text-white text-sm sm:text-base px-4 sm:px-6 py-1 sm:py-2 mx-1 sm:mx-2 rounded">
+          <button className="bg-teal-900 text-white text-sm sm:text-base px-3 sm:px-6 py-1 sm:py-2 mx-1 sm:mx-2 rounded">
             Sign up
           </button>
         </div>
