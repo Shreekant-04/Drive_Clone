@@ -1,7 +1,9 @@
 const User = require("../models/User");
 const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
+const multer = require("multer");
 require("dotenv").config();
+const { Buffer } = require("buffer");
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -85,7 +87,7 @@ exports.verifyOtp = async (req, res) => {
     await user.save();
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
+      expiresIn: "6h",
     });
 
     res.status(200).json({ token, message: "Login successful" });
@@ -106,5 +108,45 @@ exports.sendTestEmail = async (req, res) => {
   } catch (error) {
     console.error("Error sending test email:", error);
     res.status(500).json({ error: "Failed to send test email" });
+  }
+};
+
+exports.updateProfile = async (req, res) => {
+  try {
+    const id = req.user.id; // User ID from JWT
+    const { name } = req.body; // Extracting name from request body
+
+    // Get the image buffer directly from Multer
+    const profileLinkBuffer = req.file ? req.file.buffer : null;
+
+    // Convert the buffer to a Base64 string if it exists
+    const profileLinkBase64 = profileLinkBuffer
+      ? profileLinkBuffer.toString("base64")
+      : null;
+
+    // Prepare update object
+    const updateData = { name }; // Initialize with the name
+
+    // Only add profileLink to updateData if it's not null
+    if (profileLinkBase64) {
+      updateData.profileLink = profileLinkBase64;
+    }
+
+    // Find the user by ID and update
+    const updateUser = await User.findOneAndUpdate({ _id: id }, updateData, {
+      new: true,
+    });
+
+    if (!updateUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json({
+      message: "Profile image and name updated successfully",
+      user: updateUser,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 };

@@ -9,6 +9,15 @@ const fileSchema = new mongoose.Schema({
   lName: { type: String, required: false },
   folderId: { type: mongoose.Schema.Types.ObjectId, ref: "Folder" },
   userId: { type: mongoose.Schema.Types.ObjectId, required: true },
+  anyone:{type:Boolean},
+  shared:[
+    {
+      userId:{type:String},
+      email: {type:String}
+
+    }
+    
+  ]
 });
 
 const File = mongoose.model("File", fileSchema);
