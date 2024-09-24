@@ -83,11 +83,12 @@ const PopupUpload = ({ open }) => {
             (progressEvent.loaded * 100) / progressEvent.total
           );
           setProgress(percentCompleted);
+    
         },
       });
       setUploading(false);
       setProgress(0);
-      open(false);
+      handleClose();
     } catch (error) {
       console.error("Error uploading file:", error);
       setUploading(false);

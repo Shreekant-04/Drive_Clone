@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import ProgressBar from "./ProgressBar";
-
+import gsap from "gsap";
 function Sidebar({data2,data}) {
   const [available, setAvail] = useState(0);
-
+ 
   useEffect(() => {
     if (data && data.length > 0) {
     
@@ -12,6 +12,11 @@ function Sidebar({data2,data}) {
    
       setAvail(totalSizeMB.toFixed(1));
     }
+    gsap.fromTo('li',{
+      translateX :"-400px"
+    },{
+      translateX: "0px",duration : 0.8, ease:'power3.inOut'
+    })
   }, [data]);
  
 

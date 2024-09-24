@@ -4,20 +4,20 @@ import Viewer from "./Viewer";
 import axios from "axios";
 import api from "../../utils/api";
 
-
-function Preview({ preview, dataPreview }) {
+function Preview({ preview, dataPreview ,toggleShared}) {
   const [fileTypes, setType] = useState("");
-  const [token,setToken] = useState(localStorage.getItem('token'))
+  const [token, setToken] = useState(localStorage.getItem("token"));
+
   useEffect(() => {
     const fetchFileType = async () => {
       try {
         if (dataPreview && dataPreview.fileName) {
           const type = await checkType(dataPreview.type);
-          setType(type); 
+          setType(type);
         }
       } catch (error) {
         console.error("Error fetching file type:", error);
-        setType("Other"); 
+        setType("Other");
       }
     };
 
@@ -27,6 +27,7 @@ function Preview({ preview, dataPreview }) {
   const handleClose = () => {
     preview(false);
   };
+
   const handleDownload = (filename, oName) => {
     axios({
       url: `${api}resource/downloadFile/${filename}`,
@@ -56,7 +57,7 @@ function Preview({ preview, dataPreview }) {
           <img src="/Logo/close.svg" alt="Close button" />
         </button>
         <div className="flex justify-start items-center p-2 w-[50%]">
-        <img
+          <img
             src={
               fileTypes === "Document"
                 ? "/Logo/Recent/doc.svg"
@@ -66,26 +67,28 @@ function Preview({ preview, dataPreview }) {
                 ? "/Logo/Recent/image.svg"
                 : "/Logo/Recent/otherWhite.svg"
             }
-            alt={fileTypes} 
-            width={'25px'}
-            height={'25px'}
+            alt={fileTypes}
+            width={"25px"}
+            height={"25px"}
           />
           <p className="mx-2">{dataPreview.fileName || "Anydesk.exe"}</p>
         </div>
+
          <div className="w-[50%] flex justify-end p-2">
             <button onClick={()=>{handleDownload(dataPreview.storedName,dataPreview.fileName)}}>
                 <img width={'25px'} src="Logo/Recent/downloadWhite.svg" alt="" />
             </button>
-            <button className="rounded-full w-full lg:w-[12%] border-[2px] mx-2 p-1 lg:p-2 hover:scale-105 duration-200 flex items-center justify-evenly">
+            <button onClick={()=>toggleShared(true)} className="rounded-full w-full lg:w-[12%] border-[2px] mx-2 p-1 lg:p-2 hover:scale-105 duration-200 flex items-center justify-evenly">
                 <img src="Logo/Recent/share.svg" alt="" />
                 Share
 
             </button>
 
+
         </div>
-       
       </div>
-    <Viewer fileName = {dataPreview.storedName}/>
+      {/* Use Viewer component to preview the file */}
+      <Viewer fileName={dataPreview.storedName} fileType={fileTypes} />
     </div>
   );
 }

@@ -6,6 +6,8 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  profileLink:String,
+  name:String,
   otp: String,
   otpExpires: Date,
   signInDate: {

@@ -53,6 +53,7 @@ function HomePage({ open, data, data2, isFolderOpen, toggleFolder, preview }) {
         handleGoBack={handleGoBack}
         preview={preview}
         data2={data2}
+        open={open}
       />
       {isFolderOpen && <FolderPopup toggle={toggleFolder} />}
     </div>

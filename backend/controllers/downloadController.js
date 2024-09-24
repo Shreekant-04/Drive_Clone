@@ -1,15 +1,12 @@
 const { MongoClient, GridFSBucket } = require('mongodb');
 const mongoURI = process.env.MongoUrl;
 let db,bucket
-MongoClient.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+MongoClient.connect(mongoURI)
   .then(client => {
      db = client.db();
      bucket = new GridFSBucket(db, {
       bucketName: 'uploads' 
 });
-
-
-
     console.log('Connected to database and created GridFSBucket');
   })
   .catch(err => {
