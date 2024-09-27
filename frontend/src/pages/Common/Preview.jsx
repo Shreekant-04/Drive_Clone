@@ -51,12 +51,13 @@ function Preview({ preview, dataPreview ,toggleShared}) {
   };
 
   return (
-    <div className="w-[100vw] h-[100vh] fixed flex flex-col z-50 bg-[#000000d5] overflow-hidden font-inter text-white items-center">
-      <div className="previewNav w-full p-2 flex justify-between h-[10%]">
+    <div className="w-[100vw] h-[100vh] top-0 right-0 fixed flex flex-col z-50 bg-[#000000d5] overflow-hidden font-inter text-white items-center">
+      <div className="previewNav w-[100%]  flex justify-between items-center px-2  h-14 md:h-16 lg:h-20">
         <button onClick={handleClose}>
-          <img src="/Logo/close.svg" alt="Close button" />
+          <img src="/Logo/close.svg" alt="Close button" className="w-6 md:w-7 lg:w-8" />
         </button>
-        <div className="flex justify-start items-center p-2 w-[50%]">
+        <div className="flex justify-start mx-2 items-center h-fit w-[90%] md:[50%]">
+          <div className="w-6">
           <img
             src={
               fileTypes === "Document"
@@ -68,23 +69,23 @@ function Preview({ preview, dataPreview ,toggleShared}) {
                 : "/Logo/Recent/otherWhite.svg"
             }
             alt={fileTypes}
-            width={"25px"}
-            height={"25px"}
+            className="w-full"
           />
-          <p className="mx-2">{dataPreview.fileName || "Anydesk.exe"}</p>
+          </div>
+         
+          <p className="mx-2 text-sm md:text-base">
+                    {dataPreview.fileName}</p>
         </div>
 
-         <div className="w-[50%] flex justify-end p-2">
-            <button onClick={()=>{handleDownload(dataPreview.storedName,dataPreview.fileName)}}>
-                <img width={'25px'} src="Logo/Recent/downloadWhite.svg" alt="" />
+         <div className="w-[50%] gap-2 flex justify-end ">
+            <button onClick={()=>{handleDownload(dataPreview.storedName,dataPreview.fileName)}}
+              className="hover:scale-105 duration-200">
+                <img width={'25px'} src="Logo/Recent/downloadWhite.svg" alt="" className="w-5 lg:w-7" />
             </button>
-            <button onClick={()=>toggleShared(true)} className="rounded-full w-full lg:w-[12%] border-[2px] mx-2 p-1 lg:p-2 hover:scale-105 duration-200 flex items-center justify-evenly">
-                <img src="Logo/Recent/share.svg" alt="" />
-                Share
-
+            <button onClick={()=>toggleShared(true)} className="rounded-full w-fit border-[2px] p-1 h-fit hover:scale-105 duration-200 flex items-center gap-2 justify-evenly">
+                <img src="Logo/Recent/share.svg" alt="" className="w-4 lg:w-6"/>
+                <p className="text-sm md:text-base">Share</p>
             </button>
-
-
         </div>
       </div>
       {/* Use Viewer component to preview the file */}

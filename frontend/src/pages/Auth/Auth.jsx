@@ -30,7 +30,7 @@ function Auth({ check }) {
 
   return (
     <section className="rightAuth w-full h-[60%] lg:w-[45%] lg:h-full p-5 flex flex-col items-center lg:items-baseline justify-center">
-      <h1 className="text-3xl md:text-4xl lg:text-4xl ">Welcome To Drive</h1>
+      <h1 className="text-2xl md:text-4xl lg:text-4xl ">Welcome To Drive</h1>
       <p className="text-gray-400 font-[300] p-2">Your files are waiting</p>
       <form
         onSubmit={handleSubmit}
@@ -40,7 +40,7 @@ function Auth({ check }) {
           id="outlined-textarea"
           label="Email"
           placeholder="Email"
-          className="my-2 w-full"
+          className="my-1 lg:my-2 w-full"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required

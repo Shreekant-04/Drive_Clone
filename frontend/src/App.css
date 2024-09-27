@@ -12,11 +12,11 @@ body{
     @apply h-[100vh] w-[100vw] overflow-x-hidden transition-all duration-300
 }
 .listSideActive{
-    @apply bg-[#004646] w-[90%] rounded-3xl cursor-pointer p-2 flex my-2 justify-center text-white items-center 
+    @apply bg-[#004646] w-[90%] rounded-3xl cursor-pointer p-2 flex my-2 text-white justify-center lg:justify-normal items-center 
 }
 
 .listSideNormal{
-    @apply  w-[90%] text-[#004646] rounded-3xl cursor-pointer p-2 flex my-2 justify-center items-center hover:bg-[#004646] hover:text-white transition-all duration-100
+    @apply  w-[90%] text-[#004646] rounded-3xl cursor-pointer p-2 flex my-2  items-center justify-center lg:justify-normal hover:bg-[#004646] hover:text-white transition-all duration-100
 }
 
 .listSideNormal:hover path {
@@ -26,10 +26,10 @@ body{
 
 }
 .btnAction1{
-    @apply flex w-[12%]  items-center justify-evenly border p-2 rounded-sm  border-[#004646] text-[#004646] hover:bg-[#004646] hover:text-white stroke-white transition-all duration-100
+    @apply flex   items-center gap-2 border p-1 lg:p-2 rounded-sm  border-[#004646] text-[#004646] hover:bg-[#004646] hover:text-white stroke-white transition-all duration-100
 }
 .btnAction2{
-    @apply flex w-[12%]  items-center justify-evenly border p-2 bg-[#004646] rounded-sm text-white
+    @apply flex   items-center gap-2 border p-1 lg:p-2 bg-[#004646] rounded-sm text-white
 }
 img{
     @apply cursor-pointer

@@ -32,22 +32,22 @@ const nav = useNavigate()
     }
   };
   return (
-    <section className="rightAuth w-full h-[60%] lg:w-[45%] lg:h-full p-5 flex flex-col items-center lg:items-baseline justify-center">
-      <h1 className="text-3xl md:text-4xl lg:text-4xl">Please Verify Otp</h1>
+    <section className="rightAuth w-full h-[60%] lg:w-[45%] lg:h-full p-5 flex flex-col items-center  lg:items-baseline justify-center">
+      <h1 className="text-2xl md:text-4xl lg:text-4xl">Please Verify Otp</h1>
       <p className="text-gray-400 font-[300] p-2">Setting-up your files</p>
       <form
         onSubmit={handleSubmit}
-        className="p-2 flex flex-col justify-start items-start md:w-1/2 w-full lg:w-[50%]"
+        className="p-2 flex flex-col justify-center items-center lg:justify-start lg:items-start md:w-1/2 w-full lg:w-[50%]"
       >
         <OTPInput
           value={otp}
           onChange={setOtp}
           numInputs={6}
           inputStyle={{
-            width: "3rem", // Set a fixed width for better visibility
-            height: "3rem", // Set a fixed height for better visibility
+            width: "2rem", // Set a fixed width for better visibility
+            height: "2rem", // Set a fixed height for better visibility
             margin: "0 0 rem", // Add some margin for spacing
-            fontSize: "1.5rem", // Increase font size for better visibility
+            fontSize: "1.2rem", // Increase font size for better visibility
             borderRadius: "0.5rem", // Slightly round the corners
             border: "1px solid #ccc", // Add a light border for definition
             textAlign: "center", // Center the text in each input

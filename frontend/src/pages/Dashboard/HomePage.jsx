@@ -33,25 +33,26 @@ function HomePage({ open, data, data2, isFolderOpen, toggleFolder, preview }) {
     };
 
   return (
-    <div className="font-inter absolute top-5 p-2 left-16 md:left-32 lg:top-20  lg:left-56 w-[80%] h-[100%]">
-      <div className="flex  justify-evenly items-center  w-[80%] h-[10%] md:h-[7%] lg:h-[15%] bg-white top-24  z-10 fixed ">
-        <h1 className="text-lg lg:text-2xl w-[70%] lg:w-[75%] font-[400] ">
-          Welcome To Drive
-        </h1>
-        <button className="btnAction1" onClick={toggleFolder}>
+    <div className="font-inter relative top-14 md:top-16 lg:top-20 p-2  bg-white h-[100%] ">
+      <div className="flex w-[78%] md:w-[88%] lg:w-[84%] justify-between items-center top-14 md:top-16 lg:top-20 bg-white py-2 z-10 fixed ">
+        <h1 className="text-lg md:text-xl lg:text-2xl md:pb-4 lg:pb-4 font-[400] ">Welcome To Drive</h1>
+        <div className="flex gap-1 justify-evenly md:pb-4 lg:pb-4">
+        <button className="btnAction1 z-20" onClick={toggleFolder}>
           <p className="hidden lg:block">Create</p>
-          <span>
-            <i className="fa-solid fa-plus  "></i>
-          </span>
+          <i className="fa-solid fa-plus  px-1 text-sm "></i>
         </button>
-        <button className="btnAction2" onClick={() => open(true)}>
+        <button className="btnAction2 z-20" onClick={() => open(true)}>
           <p className="hidden lg:block ">Upload</p>
           <span>
-            <i className="fa-solid fa-arrow-up-from-bracket"></i>
+          <i className="fa-solid fa-arrow-up-from-bracket px-1 text-sm"></i>
           </span>
         </button>
+        </div>
+       
       </div>
+      <div className="mt-14 md:mt-16 lg:mt-20">
       <Stats data={data} data2={data2} />
+      <div className="mt-2">
       <Recent
         data={selectedFolder ? folderFiles : data}
         onFolderClick={handleFolderClick}
@@ -63,6 +64,10 @@ function HomePage({ open, data, data2, isFolderOpen, toggleFolder, preview }) {
         handleUpload={handleUpload}
       />
       {isFolderOpen && <FolderPopup toggle={toggleFolder} />}
+      </div>
+      
+      </div>
+      
     </div>
   );
 }

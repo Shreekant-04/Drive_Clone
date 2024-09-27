@@ -113,19 +113,19 @@ function SharePopup({ toggleShared, dataPreview }) {
  
 
   return (
-    <div className="w-[100vw] h-[100vh] fixed flex flex-col z-[999] bg-[#000000d5] overflow-hidden font-inter text-white justify-center items-center">
+    <div className="w-[100vw] h-[100vh] top-0 right-0 fixed flex  z-[999] bg-[#000000d5]  overflow-hidden font-inter text-white justify-center items-center">
       <div
         ref={popRef}
-        className="w-[50%] bg-white h-[50%] rounded-lg my-10 overflow-hidden flex flex-col  text-black"
+        className="w-[80%] md:w-[40%] lg:w-[30%] bg-white h-fit absolute top-5 right-2 lg:top-10 lg:right-10 rounded-lg my-10 overflow-hidden flex flex-col  text-black"
       >
-        <div className="w-full flex justify-end h-[10%] p-2">
-          <h1 className="w-full text-center p-2 font-[800]">Share Your File</h1>
+        <div className="w-full flex justify-end h-[5%] md:h-[10%] p-2">
+          <h1 className="w-full text-center p-2 font-semibold">Share Your File</h1>
           <button onClick={() => handleClose(false)}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              height="24px"
+              height="20px"
               viewBox="0 -960 960 960"
-              width="24px"
+              width="20px"
               fill="#18333C"
             >
               <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
@@ -133,27 +133,27 @@ function SharePopup({ toggleShared, dataPreview }) {
           </button>
         </div>
 
-        <div className="w-full p-2 flex flex-col justify-center items-center">
-          <div className="flex items-center border rounded-full p-1 overflow-hidden">
-            <p className="w-[280px] p-2 text-blue-500 rounded-full overflow-hidden">
+        <div className="w-full p-1 md:p-2 flex flex-col justify-center  items-center">
+          <div className="flex justify-start items-center border rounded-full p-1 overflow-hidden">
+            <p className="w-[200px] md:w-[280px] p-1 lg:p-2 text-sm md:text-base text-blue-500 rounded-full overflow-hidden">
               {sharedUrl || "https://google.com"}
             </p>
             <svg
               onClick={handleCopy}
               className="-rotate-[40deg] hover:scale-105 duration-300 transition-all cursor-pointer z-20 "
               xmlns="http://www.w3.org/2000/svg"
-              height="30px"
+              height="20px"
               viewBox="0 -960 960 960"
-              width="30px"
+              width="20px"
               fill="#18333C"
             >
               <path d="M440-280H280q-83 0-141.5-58.5T80-480q0-83 58.5-141.5T280-680h160v80H280q-50 0-85 35t-35 85q0 50 35 85t85 35h160v80ZM320-440v-80h320v80H320Zm200 160v-80h160q50 0 85-35t35-85q0-50-35-85t-85-35H520v-80h160q83 0 141.5 58.5T880-480q0 83-58.5 141.5T680-280H520Z" />
             </svg>
           </div>{" "}
-          <h1 className="font-[800] p-2 w-full">Sharing Permission</h1>
-          <form className="w-full p-2 flex flex-col justify-center items-center">
+          <h1 className="text-gray-500  pt-3 px-2 w-full">Sharing Permission</h1>
+          <form className="w-full p-2 flex flex-col justify-center items-end">
             <input
-              className="text-[14px] w-[80%] border p-2 outline-none rounded-full font-[600]"
+              className=" w-full border p-1 md:p-2 outline-none rounded-md text-sm md:text-base"
               type="text"
               name="users"
               id="users"
@@ -163,14 +163,14 @@ function SharePopup({ toggleShared, dataPreview }) {
             />
             <button
               type="submit"
-              className="bg-[#004646] text-white p-2 rounded-full my-2 w-[100px]"
+              className="bg-[#004646] text-white p-1 md:p-2 rounded-lg my-2 w-[100px]"
               onClick={handleSave}
             >
-              Save
+              Share
             </button>
           </form>
           <div className="flex justify-between w-full p-2">
-            <p className="font-[800]">Share With Anyone</p>
+            <p className="text-gray-500 ">Share With Anyone</p>
             <Switch
               checked={checked}
               onChange={handleAnyone}

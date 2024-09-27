@@ -35,7 +35,7 @@ function ProgressBar({ total, available, px, upload }) {
   };
 
   return (
-    <div style={{ marginLeft: `${px}px` || "15px" }} className="relative w-[90%] rounded-3xl bg-[#EEEEEE] text-center text-white">
+    <div style={{ marginLeft: `${px}px` || "15px" }} className="relative w-[90%] rounded-3xl bg-[#e0e0e0] text-center text-white">
       <span className="absolute inset-0 flex items-center justify-center text-sm">
         {progress > 100 ? 100 : progress}%
       </span>

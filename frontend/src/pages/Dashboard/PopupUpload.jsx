@@ -100,22 +100,22 @@ const PopupUpload = ({ open, selectedFolderId, setSelectedFolderId }) => {
 
   return (
     <div
-      className="w-[100vw] h-[100vh] fixed flex justify-center items-center z-50 bg-[#dfdcdc93] overflow-hidden"
+      className="w-[100vw] h-[100vh] fixed top-0 left-0 flex justify-center items-center z-50 bg-[#dfdcdc93] overflow-hidden"
       onDrop={handleDrop}
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
     >
       <div
         ref={popRef}
-        className={`w-70% lg:w-[50%] h-[30%] lg:h-[50%] flex p-2 flex-col rounded-lg bg-white`}
+        className={`w-70% lg:w-[40%] h-[30%] md:h-[40%]  flex p-2 flex-col rounded-lg bg-white`}
       >
-        <div className="w-full flex justify-end h-[10%]">
+        <div className="w-full flex justify-end ">
           <button className="" onClick={handleClose}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              height="24px"
+              height="20px"
               viewBox="0 -960 960 960"
-              width="24px"
+              width="20px"
               fill="#18333C"
             >
               <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
@@ -123,7 +123,7 @@ const PopupUpload = ({ open, selectedFolderId, setSelectedFolderId }) => {
           </button>
         </div>
         <div
-          className={`flex flex-col justify-center items-center h-[80%] p-4 border-2 border-dashed border-gray-300 rounded-lg ${
+          className={`flex flex-col justify-center items-center h-[80%] md:h-[90%] lg:h-[90%] p-4 border-2 border-dashed border-gray-300 rounded-lg ${
             dragging ? "bg-[#cfd2d3]" : "bg-white"
           }`}
         >

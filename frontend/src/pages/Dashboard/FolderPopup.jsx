@@ -53,15 +53,15 @@ const FolderPopup = ({ toggle }) => {
   };
 
   return (
-    <div className="w-[100vw] h-[100vh] fixed flex justify-center items-center z-50 bg-[#dfdcdc93] overflow-hidden font-inter">
-      <div ref={popRef} className="w-[70%] md:w-[50%] lg:w-[30%] h-fit  flex p-4 flex-col rounded-lg bg-white">
+    <div className="w-[100vw]  h-[100vh] top-0 left-0 fixed flex justify-center  items-center z-50 bg-[#dfdcdc93] overflow-hidden font-inter">
+      <div ref={popRef} className="w-[80%] md:w-[50%] lg:w-[30%] h-fit  flex p-3 flex-col rounded-lg bg-white">
         <div className="w-full flex justify-end">
           <button onClick={handleClose}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              height="24px"
+              height="20px"
               viewBox="0 -960 960 960"
-              width="24px"
+              width="20px"
               fill="#18333C"
             >
               <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
@@ -69,10 +69,10 @@ const FolderPopup = ({ toggle }) => {
           </button>
         </div>
         <div className="flex gap-2 items-center mb-2 lg:mb-4">
-        <i  className="fa-solid fa-folder-plus text-teal-900 text-lg  lg:text-3xl "></i>
-        <h2 className="text-lg lg:text-xl font-semibold  ">
-          Create New Folder
-        </h2>
+          <i  className="fa-solid fa-folder-plus text-teal-900 md:text-xl lg:text-3xl "></i>
+          <h2 className="font-semibold md:text-xl  ">
+            Create New Folder
+          </h2>
         </div>
         
         
@@ -81,9 +81,9 @@ const FolderPopup = ({ toggle }) => {
           placeholder="Folder Name"
           value={folderName}
           onChange={(e) => setFolderName(e.target.value)}
-          className="w-full p-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:border-primary"
+          className="w-full  mb-3 md:mb-4 p-1 md:p-2  border border-gray-300 rounded-md focus:outline-none focus:border-primary"
         />
-        <div className="flex justify-evenly gap-2 lg:justify-end lg:space-x-4">
+        <div className="flex justify-evenly gap-2 md:justify-end lg:justify-end ">
           <button
             onClick={handleCreateFolder}
             className="bg-[#004646] text-white py-2 px-4 rounded-sm hover:bg-[#004646d0] transition"
