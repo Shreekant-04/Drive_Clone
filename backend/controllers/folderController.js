@@ -20,7 +20,7 @@ exports.createFolder = async (req, res) => {
 // Get all folders for the user
 exports.getFolders = async (req, res) => {
   try {
-    const folders = await Folder.find({ userId: req.user.id });
+    const folders = await Folder.find({ userId: req.user.id ,isTrashed: false });
     if (!folders || folders.length === 0) {
       return res.status(200).json({ message: "No folders found" });
     }

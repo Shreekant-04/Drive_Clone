@@ -78,44 +78,43 @@ function Recent({
         console.error("Error downloading file:", err);
       });
   };
-  const delFile = async (fileName, oName) => {
+  const TrashFile = async (fileName, oName) => {
     try {
-      const response = await axios.delete(`${api}files/delete/${fileName}`, {
+      const response = await axios.put(`${api}trash/file/${fileName}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
       // Show a success toast notification
-      toast.success(`${oName} deleted successfully!`, {
+      toast.success(`${oName} Moved to Trash`, {
         autoClose: 1000, // Duration in milliseconds
       });
       open(false);
     } catch (error) {
-      console.error("Error deleting file:", error);
-      toast.error("Failed to delete the file.");
+      console.error("Error Trashing file:", error);
+      toast.error("Failed to Trash the file.");
     }
   };
 
-  //Delete Folder
-  const handleDelete = async (name, folderId) => {
+  const TrashFolder = async (name, folderId) => {
     try {
-      const response = await fetch(`${api}folders/${folderId}`, {
-        method: "DELETE",
+      const response = await fetch(`${api}trash/folder/${folderId}`, {
+        method: "PUT",
       });
 
       if (response.ok) {
         setFolders((prevFolders) =>
           prevFolders.filter((folder) => folder._id !== folderId)
         );
-        toast.success(`${name} deleted successfully!`, {
-          autoClose: 1000,
+        toast.success(`${name} Trashed successfully!`, {
+          autoClose: 1000, // Duration in milliseconds
         });
       } else {
-        toast.error("Failed to delete the folder.");
+        toast.error("Failed to trash the folder.");
       }
     } catch (error) {
-      console.error("Error deleting folder:", error);
+      console.error("Error trashing folder:", error);
     }
   };
 
@@ -130,7 +129,7 @@ function Recent({
     try {
       const response = await axios.put(
         `${api}folders/${folderId}`,
-        { newName : newFolderName },
+        { newName: newFolderName },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -343,7 +342,7 @@ function Recent({
 
                 <i
                   className="fa-solid fa-trash-can  text-gray-600 hover:text-red-500 hover:scale-125 transition duration-200"
-                  onClick={() => delFile(item.storedName, item.fileName)}
+                  onClick={() => TrashFile(item.storedName, item.fileName)}
                 ></i>
               </div>
             </div>
@@ -419,7 +418,7 @@ function Recent({
                     className="fa-solid fa-trash-can text-gray-600 hover:text-red-500 hover:scale-125 transition duration-200"
                     onClick={(e) => {
                       e.stopPropagation();
-                      handleDelete(folder.folderName, folder._id);
+                      TrashFolder(folder.folderName, folder._id);
                     }}
                   ></i>
                 </div>
@@ -528,7 +527,7 @@ function Recent({
 
                     <i
                       className="fa-solid fa-trash-can  text-gray-600 hover:text-red-500 hover:scale-125 transition duration-200"
-                      onClick={() => delFile(item.storedName, item.fileName)}
+                      onClick={() => TrashFile(item.storedName, item.fileName)}
                     ></i>
                   </div>
                 </div>

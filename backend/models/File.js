@@ -20,6 +20,7 @@ const fileSchema = new mongoose.Schema({
       email: { type: String },
     },
   ],
+  isTrashed: { type: Boolean, default: false },
 });
 
 const File = mongoose.model("File", fileSchema);
