@@ -199,12 +199,7 @@ function Recent({
        );
 
        const updatedFile = response.data.file;
-       const updatedData = data.map((file) =>
-         file._id === fileId ? updatedFile : file
-       );
-       // Update the parent component's state
-       // You might need to pass a function to update the parent state
-       // For now, we'll just update the local state
+
        setFileTypes((prevTypes) => ({
          ...prevTypes,
          [updatedFile.fileName]: checkType(updatedFile.type),
@@ -325,7 +320,7 @@ function Recent({
                 </div>
               </div>
 
-              <div className="menuBtn flex items-center gap-2">
+              <div className="menuBtn flex items-center gap-3">
                 <i
                   className="fa-solid fa-download  text-gray-600 hover:text-blue-500 hover:scale-125 transition duration-200"
                   onClick={() => downloadFile(item.storedName, item.fileName)}
@@ -403,7 +398,7 @@ function Recent({
                   </div>
                  
                 </div>
-                <div className="menuBtn flex items-center gap-2 ">
+                <div className="menuBtn flex items-center gap-3 ">
                     {editingFolder === folder._id ? (
                       <button onClick={(e) => handleUpdate(e, folder._id)}>
                         <i className="fa-solid fa-check text-green-500 hover:scale-125 transition duration-200"></i>
@@ -506,7 +501,7 @@ function Recent({
 
                   </div>
 
-                  <div className="menuBtn flex items-center gap-2  ">
+                  <div className="menuBtn flex items-center gap-3 ">
                     <i
                       className="fa-solid fa-download  text-gray-600 hover:text-blue-500 hover:scale-125 transition duration-200"
                       onClick={() =>
