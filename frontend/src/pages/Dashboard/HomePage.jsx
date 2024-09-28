@@ -63,7 +63,6 @@ function HomePage({ open, data, data2, isFolderOpen, toggleFolder, preview }) {
         open={open}
         handleUpload={handleUpload}
       />
-      {isFolderOpen && <FolderPopup toggle={toggleFolder} />}
       </div>
       
       </div>
