@@ -1,38 +1,44 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState , useRef} from "react";
+import { Link, useLocation } from "react-router-dom";
 import ProgressBar from "./ProgressBar";
 import gsap from "gsap";
 function Sidebar({data2,data}) {
   const [available, setAvail] = useState(0);
+  const location = useLocation();
+  const isFirstRender = useRef(true);
  
   useEffect(() => {
-    if (data && data.length > 0) {
     
-      const totalSizeMB = data.reduce((total, item) => total + (item.size || 0), 0) / 1024 / 1024;
-  
-   
-      setAvail(totalSizeMB.toFixed(1));
+    if (isFirstRender.current) {
+      // Play animation only on first render
+      gsap.fromTo(
+        'li',
+        { translateX: "-400px" },
+        { translateX: "0px", duration: 0.8, ease: 'power3.inOut' }
+      );
+      isFirstRender.current = false; // Set to false after first render
     }
-    gsap.fromTo('li',{
-      translateX :"-400px"
-    },{
-      translateX: "0px",duration : 0.8, ease:'power3.inOut'
-    })
+    if (data && data.length > 0) {
+      const totalSizeMB = data.reduce((total, item) => total + (item.size || 0), 0) / 1024 / 1024;
+      setAvail(totalSizeMB.toFixed(1));
+
+    }
   }, [data]);
- 
 
   return (
     <div className="sideBar w-[18%] md:w-[10%] lg:w-[15%] font-inter bg-gray-100 top-14 md:top-16 lg:top-20 px-2 h-full fixed overflow-y-auto">
       <ul className="w-full flex flex-col  items-center">
-        <li className="listSideActive">
-          <span>
+        <li className={location.pathname === '/dashboard' ? 'listSideActive' : 'listSideNormal'}>
+        <Link to="/dashboard" className="flex items-center justify-center lg:justify-start w-full">
           <i className="fa-solid fa-house lg:mx-2"></i>
-          </span>
           <p className="hidden lg:block p-1">Home</p>
+          </Link>
         </li>
-        <li className="listSideNormal">
-         
-          <i className="fa-solid fa-hard-drive  lg:mx-2"></i>
-          <p className=" hidden lg:block p-1">My Drive</p>
+        <li className={location.pathname === '/mydrive' ? 'listSideActive' : 'listSideNormal'}>
+          <Link to="/mydrive" className="flex items-center justify-center w-full">
+            <i className="fa-solid fa-hard-drive  lg:mx-2"></i>
+            <p  className=" hidden lg:block p-1 w-full">My Drive</p>
+          </Link>
         </li>
   
         <li className="listSideNormal">

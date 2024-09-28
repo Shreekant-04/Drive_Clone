@@ -7,6 +7,7 @@ import Main from "../pages/Auth/Main";
 import Landing from "../pages/Landing/Landing";
 import PopupUpload from "../pages/Dashboard/PopupUpload";
 import SharePrev from "../pages/Common/SharePrev";
+import MyDrive from "../pages/MyDrive/MyDrive";
 
 
 const Routing = () => {
@@ -17,6 +18,7 @@ const Routing = () => {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/dashboard" element={<Home/>} />
+        <Route path="/mydrive" element={<MyDrive/>} />
         <Route path="/landing" element={<Landing />} />
         <Route path="/upload" element={<PopupUpload />} />
         <Route path="/share/:filename" element={<SharePrev/>} />

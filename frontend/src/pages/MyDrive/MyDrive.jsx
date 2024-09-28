@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../Common/Navbar";
 import Sidebar from "../Common/Sidebar";
-import HomePage from "./HomePage";
-import PopupUpload from "./PopupUpload";
-import FolderPopup from "./FolderPopup";
+import HomePage from "../MyDrive/HomePage";
+import PopupUpload from "../Dashboard/PopupUpload";
+import FolderPopup from "../Dashboard/FolderPopup";
 import axios from "axios";
 import api from "../../utils/api";
 import Preview from "../Common/Preview";
@@ -11,7 +11,7 @@ import Profile from "../Common/Profile";
 import ProfilePopup from "../Common/ProfilePopup";
 import SharePopup from "../Common/SharePopup";
 
-const Home = () => {
+const MyDrive = () => {
   const [isOpen, setOpen] = useState(false);
   const [selectedFolderID, setSelectedFolderId] = useState(null);
   const [isPreview, setPreview] = useState(false);
@@ -43,7 +43,8 @@ const Home = () => {
         if (res && res2) {
           setData(res.data);
           setData2(res2.data);
-          setPreviewData(res.data); // Use res.data instead of data
+
+          setPreviewData(data);
         }
       } catch (error) {
         console.log(error);
@@ -142,4 +143,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default MyDrive;

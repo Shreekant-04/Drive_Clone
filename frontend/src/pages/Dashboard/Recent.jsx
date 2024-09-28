@@ -253,13 +253,13 @@ function Recent({
               </div>
               <div className="flex  items-center justify-end gap-2 ">
                 <i
-                  className="fa-solid fa-trash-can  text-gray-600"
+                  className="fa-solid fa-trash-can  text-gray-600 hover:text-red-500  hover:scale-125 transition duration-200"
                   onClick={(e) => {
                     e.stopPropagation(); // Prevent onClick for folder
                     handleDelete(folder.folderName, folder._id);
                   }}
                 ></i>
-                  <i className="fa-solid fa-ellipsis-vertical text-gray-600"></i>
+                  <i className="fa-solid fa-ellipsis-vertical text-gray-600 hover:text-teal-500 hover:scale-125 transition duration-200"></i>
 
                 </div>
                 </div>
@@ -336,16 +336,16 @@ function Recent({
                   </div>
                   <div className="menuBtn flex items-center gap-2  ">
                     <i
-                      className="fa-solid fa-download  text-gray-600"
+                      className="fa-solid fa-download  text-gray-600 hover:text-blue-500 hover:scale-125 transition duration-200"
                       onClick={() =>
                         downloadFile(item.storedName, item.fileName)
                       }
                     ></i>
 
-                    <i className="fa-solid fa-pen  text-gray-600"></i>
+                    <i className="fa-solid fa-pen  text-gray-600 hover:text-teal-500 hover:scale-125 transition duration-200"></i>
 
                       <i
-                        className="fa-solid fa-trash-can  text-gray-600"
+                        className="fa-solid fa-trash-can  text-gray-600 hover:text-red-500 hover:scale-125 transition duration-200"
                         onClick={() => delFile(item.storedName, item.fileName)}
                       ></i>
                   </div>

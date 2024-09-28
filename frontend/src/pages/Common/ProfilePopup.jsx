@@ -54,12 +54,12 @@ function ProfilePopup({ open, data }) {
   };
 
   return (
-    <div className="w-[100vw] h-[100vh] fixed flex justify-center items-center z-50 bg-[#dfdcdc93] overflow-hidden font-inter">
+    <div className="w-[100vw] h-[100vh] fixed top-0 left-0 flex justify-center items-center z-50 bg-[#dfdcdc93] overflow-hidden font-inter">
       <div
         ref={popRef}
-        className={`w-[50%] h-[50%] flex p-2 flex-col rounded-lg bg-white`}
+        className={`w-[80%] md:w-[40%] h-fit flex p-2 flex-col rounded-lg bg-white`}
       >
-        <div className="w-full flex justify-end h-[10%]">
+        <div className="w-full flex justify-end ">
           <button onClick={() => open(false)}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -109,7 +109,7 @@ function ProfilePopup({ open, data }) {
           />
           <button
             type="submit"
-            className="p-2 bg-[#004646] text-white w-[100px] rounded-full hover:bg-[#0046468c]"
+            className="p-2 bg-[#004646] text-white w-[100px] rounded-md hover:bg-[#0046468c]"
           >
             Save
           </button>
