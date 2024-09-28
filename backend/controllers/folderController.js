@@ -77,3 +77,35 @@ exports.deleteFolder = async (req, res) => {
     res.status(500).json({ message: "Failed to delete folder and files." });
   }
 };
+
+exports.updateFolderName = async (req, res) => {
+  try {
+    const { folderId } = req.params;
+    const { newName } = req.body;
+
+    const folder = await Folder.findOneAndUpdate(
+      { _id: folderId, userId: req.user.id },
+      { folderName: newName },
+      { new: true }
+    );
+
+    if (!folder) {
+      return res.status(404).json({ message: "Folder not found" });
+    }
+
+    res.status(200).json({
+      message: "Folder name updated successfully",
+      folder: {
+        _id: folder._id,
+        folderName: folder.folderName,
+        userId: folder.userId,
+        createdAt: folder.createdAt,
+      },
+    });
+  } catch (error) {
+    console.error("Error updating folder name:", error);
+    res
+      .status(500)
+      .json({ message: "Failed to update folder name", error: error.message });
+  }
+};

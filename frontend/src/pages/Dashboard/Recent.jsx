@@ -17,6 +17,10 @@ function Recent({
   const [fileTypes, setFileTypes] = useState({});
   const [folders, setFolders] = useState([]);
   const [token, setToken] = useState(localStorage.getItem("token") || "");
+  const [newFolderName, setNewFolderName] = useState("");
+  const [editingFolder, setEditingFolder] = useState(null);
+  const [editingFileId, setEditingFileId] = useState(null);
+  const [newFileName, setNewFileName] = useState("");
 
   useEffect(() => {
     const fetchFileTypes = async () => {
@@ -34,6 +38,7 @@ function Recent({
       setFileTypes(fileTypesObj);
     };
 
+    //Get all Folders
     const fetchFolders = async () => {
       try {
         const response = await axios.get(`${api}folders/get-folders`, {
@@ -41,7 +46,7 @@ function Recent({
             Authorization: `Bearer ${token}`,
           },
         });
-        setFolders(response.data); // Store folders data
+        setFolders(response.data);
       } catch (error) {
         console.error("Error fetching folders:", error);
       }
@@ -49,8 +54,10 @@ function Recent({
 
     fetchFileTypes();
     fetchFolders();
-  }, [data, token]);
+  }, [data, token , newFileName ,newFolderName]);
 
+
+  // Download Files
   const downloadFile = (filename, oName) => {
     axios({
       url: `${api}resource/downloadFile/${filename}`,
@@ -91,7 +98,8 @@ function Recent({
     }
   };
 
-  const handleDelete = async (name ,folderId) => {
+  //Delete Folder
+  const handleDelete = async (name, folderId) => {
     try {
       const response = await fetch(`${api}folders/${folderId}`, {
         method: "DELETE",
@@ -102,7 +110,7 @@ function Recent({
           prevFolders.filter((folder) => folder._id !== folderId)
         );
         toast.success(`${name} deleted successfully!`, {
-          autoClose: 1000, // Duration in milliseconds
+          autoClose: 1000, 
         });
       } else {
         toast.error("Failed to delete the folder.");
@@ -111,6 +119,110 @@ function Recent({
       console.error("Error deleting folder:", error);
     }
   };
+
+  // Edit Folder Name
+  const handleUpdate = async (e, folderId) => {
+    e.stopPropagation();
+    if (newFolderName.trim() === "") {
+      toast.error("Folder name can't be empty!");
+      return;
+    }
+
+    try {
+      const response = await axios.put(
+        `${api}folders/${folderId}`,
+        { newFolderName },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setFolders(
+        folders.map((folder) =>
+          folder._id === folderId ? { ...folder, folderName: newFolderName } : folder
+        )
+      );
+
+      setEditingFolder(null);
+      toast.success("Folder name updated successfully!");
+    } catch (error) {
+      console.error("Error updating folder name:", error);
+      toast.error("Failed to update folder name.");
+    }
+  };
+
+  const handleKeyPress = (e, folderId) => {
+    if (e.key === "Enter") {
+      handleUpdate(e, folderId);
+    }
+  };
+
+  const handleEditClick = (e, folderId, currentName) => {
+    e.stopPropagation();
+    setEditingFolder(folderId);
+    setNewFolderName(currentName);
+  };
+
+  const handleNameChange = (e) => {
+    setNewFolderName(e.target.value);
+  };
+
+  // Edit File Name 
+   const handleFileEditClick = (e, fileId, currentName) => {
+     e.stopPropagation();
+     setEditingFileId(fileId);
+     setNewFileName(currentName);
+   };
+
+   const handleFileNameChange = (e) => {
+     setNewFileName(e.target.value);
+   };
+
+   const handleFileUpdate = async (e, fileId) => {
+     e.stopPropagation();
+     if (newFileName.trim() === "") {
+       toast.error("File name can't be empty!");
+       return;
+     }
+
+     try {
+       const response = await axios.put(
+         `${api}files/${fileId}`,
+         { newFileName },
+         {
+           headers: {
+             Authorization: `Bearer ${token}`,
+           },
+         }
+       );
+
+       const updatedFile = response.data.file;
+       const updatedData = data.map((file) =>
+         file._id === fileId ? updatedFile : file
+       );
+       // Update the parent component's state
+       // You might need to pass a function to update the parent state
+       // For now, we'll just update the local state
+       setFileTypes((prevTypes) => ({
+         ...prevTypes,
+         [updatedFile.fileName]: checkType(updatedFile.type),
+       }));
+
+       setEditingFileId(null);
+       toast.success("File name updated successfully!");
+     } catch (error) {
+       console.error("Error updating file name:", error);
+       toast.error("Failed to update file name.");
+     }
+   };
+
+   const handleFileKeyPress = (e, fileId) => {
+     if (e.key === "Enter") {
+       handleFileUpdate(e, fileId);
+     }
+   };
 
   return (
     <>
@@ -135,7 +247,7 @@ function Recent({
           onClick={() => handleUpload(selectedFolder._id)}
         >
           <p className="hidden lg:block ">Upload</p>
-            <i className="fa-solid fa-arrow-up-from-bracket"></i>
+            <i className="fa-solid fa-arrow-up-from-bracket text-sm px-1"></i>
         </button>
       </div>
       <div className="w-full px-2 py-6 flex flex-col justify-start">
@@ -150,11 +262,11 @@ function Recent({
           data.map((item, i) => (
             <div
               key={i}
-              className="flex w-full cursor-pointer justify-between p-3 my-2 items-center bg-[#e7e7e763] text-[12px] font-inter rounded-[16px] hover:bg-gray-200 "
+              className="flex  w-full cursor-pointer justify-between p-3 my-2 items-center bg-[#e7e7e763] text-[12px] font-inter rounded-[16px] hover:bg-[#e7e7e7a2]"
             >
-              <div className="itemName flex items-center text-center justify-start w-[75%]">
+              <div className="itemName flex items-center w-[70%]  md:w-[25%] ">
                 <img
-                  className=""
+                  className="w-5"
                   src={
                     fileTypes[item.fileName] === "Document"
                       ? "/Logo/Recent/doc.svg"
@@ -166,49 +278,77 @@ function Recent({
                   }
                   alt=""
                 />
-                <p
-                  onClick={() => {
-                    preview(true, item);
-                  }}
-                  className="mx-2 hover:underline "
-                >
-                  {item.fileName.substring(0, 20)}
-                </p>
+                {editingFileId === item._id ? (
+                  <input
+                    type="text"
+                    value={newFileName}
+                    onChange={handleFileNameChange}
+                    onKeyPress={(e) => handleFileKeyPress(e, item._id)}
+                    onClick={(e) => e.stopPropagation()}
+                    className="mx-2 p-1 border border-gray-200 outline-slate-200 rounded"
+                    autoFocus
+                  />
+                ) : (
+                  <p
+                    onClick={() => {
+                      preview(true, item);
+                    }}
+                    className="mx-2 hover:underline truncate"
+                  >
+                    <span className="block sm:max-w-[15ch] md:max-w-[20ch] lg:max-w-none">
+                    {item.fileName}
+                  </span>
+                  </p>
+                )}
               </div>
-              <div className="size w-[10%] hidden lg:block">
-                <p>{(item.size / 1024 / 1024).toFixed(1)} MB</p>
+
+              <div className="flex items-center gap-2 justify-evenly  w-[30%] md:w-[75%]">
+                <div className="size hidden md:block lg:block">
+                  <p>{(item.size / 1024 / 1024).toFixed(1)} MB</p>
+                </div>
+                <div className="type  hidden md:block lg:block">
+                  <p>
+                    {fileTypes[item.fileName] === "Document"
+                      ? "Document"
+                      : fileTypes[item.fileName] === "Video"
+                      ? "Video"
+                      : fileTypes[item.fileName] === "Image"
+                      ? "Image"
+                      : "Other"}
+                  </p>
+                </div>
+                <div className="accessTime  hidden md:block lg:block">
+                  <p>Last Opened {setTime(item.lAccess) || ""}</p>
+                </div>
+                <div className="accessName w-[10%] hidden lg:block">
+                  <p>{item.lName}</p>
+                </div>
               </div>
-              <div className="type w-[10%] hidden lg:block">
-                <p>
-                  {fileTypes[item.fileName] === "Document"
-                    ? "Document"
-                    : fileTypes[item.fileName] === "Video"
-                    ? "Video"
-                    : fileTypes[item.fileName] === "Image"
-                    ? "Image"
-                    : "Other"}
-                </p>
-              </div>
-              <div className="accessTime w-[15%] hidden lg:block">
-                <p>Last Opened {setTime(item.lAccess) || ""}</p>
-              </div>
-              <div className="accessName w-[10%] hidden lg:block">
-                <p>{item.lName}</p>
-              </div>
-              <div className="menuBtn flex  items-center gap-2 lg:gap-4 justify-evenly w-[20%] lg:w-[10%]">
+
+              <div className="menuBtn flex items-center gap-2">
                 <i
-                  className="fa-solid fa-download  text-gray-600"
+                  className="fa-solid fa-download  text-gray-600 hover:text-blue-500 hover:scale-125 transition duration-200"
                   onClick={() => downloadFile(item.storedName, item.fileName)}
                 ></i>
 
-                <i className="fa-solid fa-pen  text-gray-600"></i>
-
-                <span>
+                {editingFileId === item._id ? (
                   <i
-                    className="fa-solid fa-trash-can  text-gray-600"
+                    className="fa-solid fa-check text-green-500 hover:scale-125 transition duration-200"
+                    onClick={(e) => handleFileUpdate(e, item._id)}
+                  ></i>
+                ) : (
+                  <i
+                    className="fa-solid fa-pen text-gray-600 hover:text-teal-500 hover:scale-125 transition duration-200"
+                    onClick={(e) =>
+                      handleFileEditClick(e, item._id, item.fileName)
+                    }
+                  ></i>
+                )}
+                
+                  <i
+                    className="fa-solid fa-trash-can  text-gray-600 hover:text-red-500 hover:scale-125 transition duration-200"
                     onClick={() => delFile(item.storedName, item.fileName)}
                   ></i>
-                </span>
               </div>
             </div>
           ))
@@ -224,49 +364,72 @@ function Recent({
                 className="flex  w-full cursor-pointer justify-between p-3 my-2 items-center bg-[#e7e7e763] text-[12px] font-inter rounded-[16px] hover:bg-[#e7e7e7a2]"
                 onClick={() => onFolderClick(folder)}
               >
-                <div className="itemName flex items-center w-[90%]  md:w-[25%] ">
+                <div className="itemName flex items-center w-[80%]  md:w-[25%] ">
                   <img
                     src="/Logo/Recent/folder.svg"
                     className="w-5"
                     alt="Folder"
                   />
-                  <p className="mx-2">{folder.folderName}</p>
+                  {editingFolder === folder._id ? (
+                    <input
+                      type="text"
+                      value={newFolderName}
+                      onChange={handleNameChange}
+                      onKeyPress={(e) => handleKeyPress(e, folder._id)}
+                      onClick={(e) => e.stopPropagation()} // Prevent folder from opening when clicking input
+                      className="mx-2 p-1 border border-gray-200 outline-slate-200 rounded"
+                      autoFocus
+                    />
+                  ) : (
+                    <p className="mx-2">{folder.folderName}</p>
+                  )}
                 </div>
 
-                <div className="flex items-center gap-2 justify-evenly w-[10%]  md:w-[75%]">
-                <div className="size hidden md:block">
-                  <p>
-                    {data.filter((item) => item.folderId === folder._id).length}{" "}
-                    Items
-                  </p>
+                <div className="flex items-center gap-2 justify-evenly w-[20%]  md:w-[75%]">
+                  <div className="size hidden md:block">
+                    <p>
+                      {data.filter((item) => item.folderId === folder._id).length}{" "}
+                      Items
+                    </p>
+                  </div>
+                  <div className="type hidden md:block lg:block">
+                    <p>Folder</p>
+                  </div>
+                  <div className="accessTime  hidden md:block lg:block">
+                    <p>Created {setTime(folder.createdAt)}</p>
+                  </div>
+                  <div className="accessName hidden md:block lg:block">
+                    <p>{folder.creatorName}</p>
+                  </div>
+                 
                 </div>
-                <div className="type hidden md:block lg:block">
-                  <p>Folder</p>
-                </div>
-                <div className="accessTime  hidden md:block lg:block">
-                  <p>Created {setTime(folder.createdAt)}</p>
-                </div>
-                <div className="accessName hidden md:block lg:block">
-                  <p>{folder.creatorName}</p>
-                </div>
-                
+                <div className="menuBtn flex items-center gap-2 ">
+                    {editingFolder === folder._id ? (
+                      <button onClick={(e) => handleUpdate(e, folder._id)}>
+                        <i className="fa-solid fa-check text-green-500 hover:scale-125 transition duration-200"></i>
+                      </button>
+                    ) : (
+                      <button
+                        onClick={(e) =>
+                          handleEditClick(e, folder._id, folder.folderName)
+                        }
+                      >
+                        <i className="fa-solid fa-pen text-gray-600 hover:text-teal-500 hover:scale-125 transition duration-200"></i>
+                      </button>
+                    )}
+                    <i
+                      className="fa-solid fa-trash-can text-gray-600 hover:text-red-500 hover:scale-125 transition duration-200"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDelete(folder.folderName, folder._id);
+                      }}
+                    ></i>
+                  </div>
               </div>
-              <div className="flex  items-center justify-end gap-2 ">
-                <i
-                  className="fa-solid fa-trash-can  text-gray-600 hover:text-red-500  hover:scale-125 transition duration-200"
-                  onClick={(e) => {
-                    e.stopPropagation(); // Prevent onClick for folder
-                    handleDelete(folder.folderName, folder._id);
-                  }}
-                ></i>
-                  <i className="fa-solid fa-ellipsis-vertical text-gray-600 hover:text-teal-500 hover:scale-125 transition duration-200"></i>
-
-                </div>
-                </div>
-                
             ))}
           </>
         )}
+
 
         {/* globle files */}
         {data.length > 0 &&
@@ -295,22 +458,31 @@ function Recent({
                       alt=""
                       className="w-5"
                     />
-                  <p
-                  onClick={() => {
-                    preview(true, item);
-                  }}
-                  className="mx-2 hover:underline truncate"
-                >
-                  <span className="block sm:max-w-[15ch] md:max-w-[20ch] lg:max-w-none">
+                    {editingFileId === item._id ? (
+                      <input
+                        type="text"
+                        value={newFileName}
+                        onChange={handleFileNameChange}
+                        onKeyPress={(e) => handleFileKeyPress(e, item._id)}
+                        onClick={(e) => e.stopPropagation()}
+                        className="mx-2 p-1 border rounded border-gray-200 outline-slate-200"
+                        autoFocus
+                      />
+                    ) : (
+                    <p
+                    onClick={() => {
+                      preview(true, item);
+                    }}
+                    className="mx-2 hover:underline truncate"
+                  >
+                    <span className="block sm:max-w-[15ch] md:max-w-[20ch] lg:max-w-none">
                     {item.fileName}
                   </span>
-                </p>
-
-
-
+                  </p>
+                    )}
                   </div>
 
-                <div className="flex items-center gap-2 justify-evenly  w-[20%] md:w-[75%]">
+                <div className="flex items-center gap-2 justify-evenly  w-[30%] md:w-[75%]">
                   <div className="size hidden md:block lg:block">
                     <p>{(item.size / 1024 / 1024).toFixed(1)} MB</p>
                   </div>
@@ -332,8 +504,8 @@ function Recent({
                     <p>{item.lName}</p>
                   </div>
 
-                  
                   </div>
+
                   <div className="menuBtn flex items-center gap-2  ">
                     <i
                       className="fa-solid fa-download  text-gray-600 hover:text-blue-500 hover:scale-125 transition duration-200"
@@ -342,7 +514,19 @@ function Recent({
                       }
                     ></i>
 
-                    <i className="fa-solid fa-pen  text-gray-600 hover:text-teal-500 hover:scale-125 transition duration-200"></i>
+                    {editingFileId === item._id ? (
+                      <i
+                        className="fa-solid fa-check text-green-500 hover:scale-125 transition duration-200"
+                        onClick={(e) => handleFileUpdate(e, item._id)}
+                      ></i>
+                    ) : (
+                      <i
+                        className="fa-solid fa-pen text-gray-600 hover:text-teal-500 hover:scale-125 transition duration-200"
+                        onClick={(e) =>
+                          handleFileEditClick(e, item._id, item.fileName)
+                        }
+                      ></i>
+                    )}
 
                       <i
                         className="fa-solid fa-trash-can  text-gray-600 hover:text-red-500 hover:scale-125 transition duration-200"

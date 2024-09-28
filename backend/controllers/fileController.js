@@ -125,3 +125,44 @@ exports.secureFile = async (req, res) => {
     res.status(500).json({ message: 'An error occurred while sharing the file' });
   }
 };
+
+
+// Edit file name
+exports.updateFileName = async (req, res) => {
+  try {
+    const { fileId } = req.params;
+    const { newFileName } = req.body;
+
+    const file = await File.findOneAndUpdate(
+      { _id: fileId, userId: req.user.id },
+      { fileName: newFileName, lAccess: Date.now(), lName: req.user.name },
+      { new: true }
+    );
+
+    if (!file) {
+      return res.status(404).json({ message: "File not found" });
+    }
+
+    res.status(200).json({
+      message: "File name updated successfully",
+      file: {
+        _id: file._id,
+        fileName: file.fileName,
+        storedName: file.storedName,
+        type: file.type,
+        size: file.size,
+        lAccess: file.lAccess,
+        lName: file.lName,
+        folderId: file.folderId,
+        userId: file.userId,
+        anyone: file.anyone,
+        shared: file.shared,
+      },
+    });
+  } catch (error) {
+    console.error("Error updating file name:", error);
+    res
+      .status(500)
+      .json({ message: "Failed to update file name", error: error.message });
+  }
+};
