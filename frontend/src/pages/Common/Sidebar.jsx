@@ -95,12 +95,13 @@ function Sidebar({ data2, data }) {
         >
           <Link
             to="/trash"
-            className="flex items-center justify-center w-full"
+            className="flex items-center  w-full"
           >
             <i className="fa-solid fa-trash lg:mx-2"></i>
             <p className=" hidden lg:block p-1">Trash</p>
           </Link>
         </li>
+        
       </ul>
       <hr />
       <div className="storage  lg:p-2 w-full  listSideNormal ">
