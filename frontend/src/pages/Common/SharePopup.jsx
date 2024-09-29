@@ -100,6 +100,7 @@ function SharePopup({ toggleShared, dataPreview }) {
   
       // Handle successful response
       console.log('Response:', response.data);
+      handleClose();
       toast.success('File shared successfully!',{
         autoClose : 500
       });
