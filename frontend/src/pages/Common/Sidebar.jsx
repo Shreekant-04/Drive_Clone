@@ -69,13 +69,13 @@ function Sidebar({data2,data}) {
         
       </ul>
       <hr />
-      <div className="storage  lg:p-2 w-full  listSideNormal ">
+      <div className="storage  lg:p-2 w-full listSideNormal ">
         <div className="flex-col  w-full justify-center  ">
-          <li className="listSideNormal hover:bg-transparent transition-all duration-100">
+          <li className=" list-none  lg:p-2 flex justify-center lg:justify-normal lg:items-center transition-all duration-100">
             <span>
-            <i className="fa-solid ml-2 lg:ml-0 fa-cloud  lg:mx-2"></i>
+            <i className="fa-solid  fa-cloud  lg:mx-2"></i>
             </span>
-            <p className="p-1 hidden lg:block">Storage</p>
+            <p className=" hidden lg:block">Storage</p>
           </li>
           <div className="hidden lg:flex flex-col items-center w-full  ">
             <ProgressBar total={data2.total} available={available} />

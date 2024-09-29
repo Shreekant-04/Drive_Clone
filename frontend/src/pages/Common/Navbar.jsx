@@ -48,7 +48,7 @@ function Navbar({profile}) {
           <div className="w-7 md:w-8 lg:w-12"><img src="/Logo/logo.svg" alt="Logo" /></div>
           <p className="font-roboto text-xl lg:text-3xl font-bold">rive</p>
         </div>
-        <div className="searchContainer flex w-full  items-center mx-3 md:px-7 lg:px-20 ">
+        {/* <div className="searchContainer flex w-full  items-center mx-3 md:px-7 lg:px-20 ">
           <div className="searchBox border-[1px] border-[#9fa4ab] w-full lg:w-6/12  rounded-full px-2 md:py-1 lg:py-1">
             <div className="flex items-center font-inter">
             <i className="fa-solid  fa-search text-gray-500 "></i>
@@ -60,7 +60,7 @@ function Navbar({profile}) {
               <img src="/Logo/filter.svg" alt="Filter" />
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className=" w-4/12 md:w-2/12 lg:w-2/12 ">
           <div className="flex justify-end md:justify-evenly items-center">

@@ -41,7 +41,7 @@ function HomePage({ open, data, data2, isFolderOpen, toggleFolder, preview }) {
           <p className="hidden lg:block">Create</p>
           <i className="fa-solid fa-plus  px-1 text-sm "></i>
         </button>
-        <button className="btnAction2 z-20" onClick={() => open(true)}>
+        <button className="btnAction2 z-20 hover:bg-teal-700" onClick={() => open(true)}>
           <p className="hidden lg:block ">Upload</p>
           <span>
           <i className="fa-solid fa-arrow-up-from-bracket px-1 text-sm"></i>
@@ -63,7 +63,6 @@ function HomePage({ open, data, data2, isFolderOpen, toggleFolder, preview }) {
         open={open}
         handleUpload={handleUpload}
       />
-      {isFolderOpen && <FolderPopup toggle={toggleFolder} />}
       </div>
       
       </div>

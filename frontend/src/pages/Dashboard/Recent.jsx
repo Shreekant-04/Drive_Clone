@@ -187,6 +187,8 @@ function Recent({
        return;
      }
 
+     
+
      try {
        const response = await axios.put(
          `${api}files/${fileId}`,
@@ -238,7 +240,7 @@ function Recent({
           {selectedFolder ? selectedFolder.folderName : ""}
         </h1>{" "}
         <button
-          className="btnAction2"
+          className="btnAction2 hover:bg-teal-700"
           onClick={() => handleUpload(selectedFolder._id)}
         >
           <p className="hidden lg:block ">Upload</p>
@@ -259,7 +261,7 @@ function Recent({
               key={i}
               className="flex  w-full cursor-pointer justify-between p-3 my-2 items-center bg-[#e7e7e763] text-[12px] font-inter rounded-[16px] hover:bg-[#e7e7e7a2]"
             >
-              <div className="itemName flex items-center w-[70%]  md:w-[25%] ">
+              <div className="itemName flex items-center w-[60%]  md:w-[25%] ">
                 <img
                   className="w-5"
                   src={
@@ -280,7 +282,7 @@ function Recent({
                     onChange={handleFileNameChange}
                     onKeyPress={(e) => handleFileKeyPress(e, item._id)}
                     onClick={(e) => e.stopPropagation()}
-                    className="mx-2 p-1 border border-gray-200 outline-slate-200 rounded"
+                    className="mx-2 p-1 border border-gray-200 w-[100%] outline-slate-200 rounded"
                     autoFocus
                   />
                 ) : (
@@ -288,20 +290,20 @@ function Recent({
                     onClick={() => {
                       preview(true, item);
                     }}
-                    className="mx-2 hover:underline truncate"
+                    className="mx-2 hover:underline truncate overflow-hidden"
                   >
-                    <span className="block sm:max-w-[15ch] md:max-w-[20ch] lg:max-w-none">
+                  <span className="block overflow-hidden sm:max-w-[10ch] md:max-w-[20ch] lg:max-w-none">
                     {item.fileName}
                   </span>
                   </p>
                 )}
               </div>
 
-              <div className="flex items-center gap-2 justify-evenly  w-[30%] md:w-[75%]">
+              <div className="flex items-center gap-2 justify-evenly  w-[40%] md:w-[75%]">
                 <div className="size hidden md:block lg:block">
                   <p>{(item.size / 1024 / 1024).toFixed(1)} MB</p>
                 </div>
-                <div className="type  hidden md:block lg:block">
+                {/* <div className="type  hidden md:block lg:block">
                   <p>
                     {fileTypes[item.fileName] === "Document"
                       ? "Document"
@@ -311,7 +313,7 @@ function Recent({
                       ? "Image"
                       : "Other"}
                   </p>
-                </div>
+                </div> */}
                 <div className="accessTime  hidden md:block lg:block">
                   <p>Last Opened {setTime(item.lAccess) || ""}</p>
                 </div>
@@ -359,7 +361,7 @@ function Recent({
                 className="flex  w-full cursor-pointer justify-between p-3 my-2 items-center bg-[#e7e7e763] text-[12px] font-inter rounded-[16px] hover:bg-[#e7e7e7a2]"
                 onClick={() => onFolderClick(folder)}
               >
-                <div className="itemName flex items-center w-[80%]  md:w-[25%] ">
+                <div className="itemName flex items-center w-[60%]  md:w-[25%] ">
                   <img
                     src="/Logo/Recent/folder.svg"
                     className="w-5"
@@ -372,7 +374,7 @@ function Recent({
                       onChange={handleNameChange}
                       onKeyPress={(e) => handleKeyPress(e, folder._id)}
                       onClick={(e) => e.stopPropagation()} // Prevent folder from opening when clicking input
-                      className="mx-2 p-1 border border-gray-200 outline-slate-200 rounded"
+                      className="mx-2 p-1 border border-gray-200 w-[100%] outline-slate-200 rounded"
                       autoFocus
                     />
                   ) : (
@@ -380,18 +382,19 @@ function Recent({
                   )}
                 </div>
 
-                <div className="flex items-center gap-2 justify-evenly w-[20%]  md:w-[75%]">
-                  <div className="size hidden md:block">
-                    <p>
+                <div className="flex items-center gap-2 justify-evenly w-[40%]  md:w-[75%]">
+                  <div className="size ">
+                    <p className="text-teal-600">
                       {data.filter((item) => item.folderId === folder._id).length}{" "}
-                      Items
+                      <span className="text-gray-700">Items</span>
                     </p>
                   </div>
-                  <div className="type hidden md:block lg:block">
+                  {/* <div className="type hidden md:block lg:block">
                     <p>Folder</p>
-                  </div>
-                  <div className="accessTime  hidden md:block lg:block">
-                    <p>Created {setTime(folder.createdAt)}</p>
+                  </div> */}
+                  <div className="accessTime  items-center gap-2  hidden md:block lg:flex">
+                    <p className="bg-gray-200 p-2 rounded-full">Created at</p>
+                    <p className="bg-gray-200 p-2 rounded-full"> {setTime(folder.createdAt)}</p>
                   </div>
                   <div className="accessName hidden md:block lg:block">
                     <p>{folder.creatorName}</p>
@@ -439,7 +442,7 @@ function Recent({
                   key={i}
                   className="flex  w-full cursor-pointer justify-between p-3 my-2 items-center bg-[#e7e7e763] text-[12px] font-inter rounded-[16px] hover:bg-[#e7e7e7a2] "
                 >
-                  <div className="itemName flex items-center w-[70%]  md:w-[25%]  ">
+                  <div className="itemName flex items-center w-[60%]  md:w-[25%]  ">
                     <img
                       src={
                         fileTypes[item.fileName] === "Document"
@@ -460,7 +463,7 @@ function Recent({
                         onChange={handleFileNameChange}
                         onKeyPress={(e) => handleFileKeyPress(e, item._id)}
                         onClick={(e) => e.stopPropagation()}
-                        className="mx-2 p-1 border rounded border-gray-200 outline-slate-200"
+                        className="mx-2 p-1 border rounded border-gray-200 w-[100%] outline-slate-200"
                         autoFocus
                       />
                     ) : (
@@ -477,11 +480,11 @@ function Recent({
                     )}
                   </div>
 
-                <div className="flex items-center gap-2 justify-evenly  w-[30%] md:w-[75%]">
+                <div className="flex items-center gap-2 justify-evenly  w-[40%] md:w-[75%]">
                   <div className="size hidden md:block lg:block">
                     <p>{(item.size / 1024 / 1024).toFixed(1)} MB</p>
                   </div>
-                  <div className="type  hidden md:block lg:block">
+                  {/* <div className="type  hidden md:block lg:block">
                     <p>
                       {fileTypes[item.fileName] === "Document"
                         ? "Document"
@@ -491,7 +494,7 @@ function Recent({
                         ? "Image"
                         : "Other"}
                     </p>
-                  </div>
+                  </div> */}
                   <div className="accessTime  hidden md:block lg:block">
                     <p>Last Opened {setTime(item.lAccess) || ""}</p>
                   </div>

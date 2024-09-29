@@ -6,7 +6,8 @@ import "react-toastify/dist/ReactToastify.css";
 function App() {
   return (
     <div>
-      <ToastContainer position="top-center" />
+      <ToastContainer position="top-center" autoClose={2000} />
+
       <Routing />
     </div>
   );

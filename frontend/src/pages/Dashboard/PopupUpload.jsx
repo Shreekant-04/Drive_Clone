@@ -13,12 +13,14 @@ const PopupUpload = ({ open, selectedFolderId, setSelectedFolderId }) => {
   const [token, setToken] = useState(localStorage.getItem("token") || "");
 
   useEffect(() => {
-    gsap.fromTo(
-      popRef.current,
-      { scale: 0 },
-      { scale: 1, duration: 0.5, ease: "power3.out" }
-    );
-  }, [open]);
+    if (open) {
+      gsap.fromTo(
+        popRef.current,
+        { scale: 0 },
+        { scale: 1, duration: 0.5, ease: "power3.out" }
+      );
+    }
+  }, []);
 
   const handleClose = () => {
     gsap.fromTo(
@@ -73,7 +75,7 @@ const PopupUpload = ({ open, selectedFolderId, setSelectedFolderId }) => {
     selectedFolderId && formData.append("folderId", selectedFolderId || null);
 
     try {
-      setUploading(true);
+      setUploading(true); // Start uploading state
       await axios.post(`${api}files/upload-file`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -87,7 +89,7 @@ const PopupUpload = ({ open, selectedFolderId, setSelectedFolderId }) => {
           setSelectedFolderId(null);
         },
       });
-      setUploading(false);
+      setUploading(false); // Stop uploading state
       setProgress(0);
       handleClose();
     } catch (error) {
@@ -109,7 +111,7 @@ const PopupUpload = ({ open, selectedFolderId, setSelectedFolderId }) => {
         ref={popRef}
         className={`w-70% lg:w-[40%] h-[30%] md:h-[40%]  flex p-2 flex-col rounded-lg bg-white`}
       >
-        <div className="w-full flex justify-end ">
+        <div className="w-full flex justify-end">
           <button className="" onClick={handleClose}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -122,38 +124,45 @@ const PopupUpload = ({ open, selectedFolderId, setSelectedFolderId }) => {
             </svg>
           </button>
         </div>
+
+        {/* Conditionally render drag-and-drop UI or progress bar based on uploading state */}
         <div
           className={`flex flex-col justify-center items-center h-[80%] md:h-[90%] lg:h-[90%] p-4 border-2 border-dashed border-gray-300 rounded-lg ${
             dragging ? "bg-[#cfd2d3]" : "bg-white"
           }`}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="200px"
-            viewBox="0 -960 960 960"
-            width="200px"
-            fill="#18333C"
-          >
-            <path d="M250-160q-86 0-148-62T40-370q0-78 49.5-137.5T217-579q20-97 94-158.5T482-799q113 0 189.5 81.5T748-522v24q72-2 122 46.5T920-329q0 69-50 119t-119 50H510q-24 0-42-18t-18-42v-258l-83 83-43-43 156-156 156 156-43 43-83-83v258h241q45 0 77-32t32-77q0-45-32-77t-77-32h-63v-84q0-89-60.5-153T478-739q-89 0-150 64t-61 153h-19q-62 0-105 43.5T100-371q0 62 43.93 106.5T250-220h140v60H250Zm230-290Z" />
-          </svg>
-          <p className="p-2 hidden lg:block">Drag & Drop to Upload File</p>
-          <p className="p-1 hidden lg:block">OR</p>
-          <button
-            onClick={handleFileClick}
-            className="p-2 rounded-md bg-[#004646] hover:scale-105 transition-all duration-200 text-white"
-          >
-            Choose a File
-            <input
-              ref={fileInputRef}
-              className="hidden"
-              type="file"
-              name="file"
-              id="file"
-              onChange={handleFileChange}
-            />
-          </button>
-          {uploading && (
-            <div className="w-full mt-4 flex justify-center items-center">
+          {!uploading ? (
+            <>
+              {/* Drag-and-drop UI when not uploading */}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="200px"
+                viewBox="0 -960 960 960"
+                width="200px"
+                fill="#18333C"
+              >
+                <path d="M250-160q-86 0-148-62T40-370q0-78 49.5-137.5T217-579q20-97 94-158.5T482-799q113 0 189.5 81.5T748-522v24q72-2 122 46.5T920-329q0 69-50 119t-119 50H510q-24 0-42-18t-18-42v-258l-83 83-43-43 156-156 156 156-43 43-83-83v258h241q45 0 77-32t32-77q0-45-32-77t-77-32h-63v-84q0-89-60.5-153T478-739q-89 0-150 64t-61 153h-19q-62 0-105 43.5T100-371q0 62 43.93 106.5T250-220h140v60H250Zm230-290Z" />
+              </svg>
+              <p className="p-2 hidden lg:block">Drag & Drop to Upload File</p>
+              <p className="p-1 hidden lg:block">OR</p>
+              <button
+                onClick={handleFileClick}
+                className="p-2 rounded-md bg-[#004646] hover:scale-105 transition-all duration-200 text-white"
+              >
+                Choose a File
+                <input
+                  ref={fileInputRef}
+                  className="hidden"
+                  type="file"
+                  name="file"
+                  id="file"
+                  onChange={handleFileChange}
+                />
+              </button>
+            </>
+          ) : (
+            <div className="w-full mt-4 flex flex-col justify-center items-center">
+              <p className="text-lg font-semibold mb-4">Uploading...</p>
               <ProgressBar total={100} available={progress} upload={true} />
             </div>
           )}
