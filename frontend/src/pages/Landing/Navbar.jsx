@@ -52,7 +52,7 @@ function Navbar() {
           to={"/login"}
           className="bg-white text-black px-4 py-2 rounded-full font-semibold"
         >
-          Claim 10 GB for free
+          Claim 500 MB for free
         </Link>
       </div>
 
