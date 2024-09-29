@@ -109,7 +109,7 @@ const PopupUpload = ({ open, selectedFolderId, setSelectedFolderId }) => {
     >
       <div
         ref={popRef}
-        className={`w-70% lg:w-[40%] h-[30%] md:h-[40%]  flex p-2 flex-col rounded-lg bg-white`}
+        className={`w-70% md:w-[40%] h-[30%] md:h-[40%]  flex p-2 flex-col rounded-lg bg-white`}
       >
         <div className="w-full flex justify-end">
           <button className="" onClick={handleClose}>

@@ -3,10 +3,10 @@ import api from "../../utils/api";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-function Navbar({profile}) {
+function Navbar({ profile }) {
   const navigate = useNavigate();
   const [token, setToken] = useState(localStorage.getItem("token") || "");
-  const [data,setData] = useState([])
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     const verifyUser = async () => {
@@ -18,10 +18,8 @@ function Navbar({profile}) {
             },
           });
 
-         setData(res.data.data[0])
-         profile(false,res.data.data[0])
-
-        
+          setData(res.data.data[0]);
+          profile(false, res.data.data[0]);
         } catch (error) {
           console.error(
             "Error:",
@@ -39,6 +37,11 @@ function Navbar({profile}) {
 
     verifyUser();
   }, [token, navigate]);
+
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/");
+  };
 
   return (
     <div className="header w-full h-14 md:h-16 lg:h-20 flex items-center p-2  fixed border-b-[1px] border-[#c1c1c1] z-20 bg-white">
@@ -62,15 +65,23 @@ function Navbar({profile}) {
           </div>
         </div> */}
 
-        <div className=" w-4/12 md:w-2/12 lg:w-2/12 ">
-          <div className="flex justify-end md:justify-evenly items-center">
-            <img className="hidden w-4 lg:w-5 mr-2 md:block lg:block hover:scale-105" src="/Logo/notification.svg" alt="Notifications" />
-            <img className="w-5 lg:w-6 hover:scale-105" src="/Logo/logout.svg" alt="Settings" />
-            <img className="w-5 lg:w-6 hover:scale-105" src="/Logo/profile.svg" alt="Profile" onClick={()=> profile(true,data)} />
-
+          <div className=" w-4/12 md:w-2/12 lg:w-2/12 ">
+            <div className="flex justify-end md:justify-end md:gap-2 items-center">
+              <img
+                className="w-5 lg:w-6 hover:scale-105"
+                src="/Logo/logout.svg"
+                alt="Settings"
+                onClick={handleLogout}
+              />
+              <img
+                className="w-5 lg:w-6 hover:scale-105"
+                src="/Logo/profile.svg"
+                alt="Profile"
+                onClick={() => profile(true, data)}
+              />
+            </div>
           </div>
         </div>
-      </div>
       </div>
     </div>
   );

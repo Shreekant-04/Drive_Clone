@@ -12,6 +12,7 @@ function Recent({
   handleGoBack,
   preview,
   open,
+  search,
   handleUpload,
 }) {
   const [fileTypes, setFileTypes] = useState({});
@@ -21,7 +22,6 @@ function Recent({
   const [editingFolder, setEditingFolder] = useState(null);
   const [editingFileId, setEditingFileId] = useState(null);
   const [newFileName, setNewFileName] = useState("");
-  const [refresh, setRefresh] = useState("");
 
   useEffect(() => {
     const fetchFileTypes = async () => {
@@ -55,7 +55,7 @@ function Recent({
 
     fetchFileTypes();
     fetchFolders();
-  }, [data, token, newFileName, newFolderName, refresh]);
+  }, [data, token, newFileName, newFolderName]);
 
   // Download Files
   const downloadFile = (filename, oName) => {
@@ -92,7 +92,6 @@ function Recent({
         autoClose: 1000, // Duration in milliseconds
       });
       open(false);
-      setRefresh("render3");
     } catch (error) {
       console.error("Error Trashing file:", error);
       toast.error("Failed to Trash the file.");
@@ -112,7 +111,6 @@ function Recent({
         toast.success(`${name} Trashed successfully!`, {
           autoClose: 1000, // Duration in milliseconds
         });
-        setRefresh("render5");
       } else {
         toast.error("Failed to trash the folder.");
       }
@@ -149,7 +147,6 @@ function Recent({
 
       setEditingFolder(null);
       toast.success("Folder name updated successfully!");
-      setRefresh("render");
     } catch (error) {
       console.error("Error updating folder name:", error);
       toast.error("Failed to update folder name.");
@@ -210,7 +207,6 @@ function Recent({
 
       setEditingFileId(null);
       toast.success("File name updated successfully!");
-      setRefresh("render2");
     } catch (error) {
       console.error("Error updating file name:", error);
       toast.error("Failed to update file name.");
@@ -223,6 +219,14 @@ function Recent({
     }
   };
 
+   // Filter the folders and files based on the search query
+   const filteredFolders = folders?.filter?.(folder =>
+    folder.folderName.toLowerCase().includes(search?.trim().toLowerCase())
+  )||[];
+
+  const filteredFiles = data?.filter(file =>
+    file.fileName.toLowerCase().includes(search?.trim().toLowerCase())
+  );
   return (
     <>
       <div
@@ -250,7 +254,7 @@ function Recent({
         </button>
       </div>
       <div className="w-full px-2 py-6 flex flex-col justify-start">
-        {selectedFolder && data.length === 0 ? (
+        {selectedFolder && filteredFiles.length === 0 ? (
           <div className="flex flex-col gap-1 justify-center items-center text-center">
             <p className="text-center w-full -mr-3 lg:mr-3 text-gray-400">
               This folder is empty.
@@ -258,7 +262,7 @@ function Recent({
           </div>
         ) : (
           selectedFolder &&
-          data.map((item, i) => (
+          filteredFiles.map((item, i) => (
             <div
               key={i}
               className="flex  w-full cursor-pointer justify-between p-3 my-2 items-center bg-[#e7e7e763] text-[12px] font-inter rounded-[16px] hover:bg-[#e7e7e7a2]"
@@ -292,7 +296,7 @@ function Recent({
                     onClick={() => {
                       preview(true, item);
                     }}
-                    className="mx-2 hover:underline truncate"
+                    className="mx-2 hover:underline truncate "
                   >
                     <span className="block sm:max-w-[15ch] md:max-w-[20ch] lg:max-w-none">
                       {item.fileName}
@@ -356,16 +360,16 @@ function Recent({
         )}
 
         {/* All Folders */}
-        {folders.length > 0 && !selectedFolder && (
+        {filteredFolders.length > 0 && !selectedFolder && (
           <>
             <h2 className="text-lg md:text-xl lg:text-2xl">Folders</h2>
-            {folders.map((folder, i) => (
+            {filteredFolders.map((folder, i) => (
               <div
                 key={i}
                 className="flex  w-full cursor-pointer justify-between p-3 my-2 items-center bg-[#e7e7e763] text-[12px] font-inter rounded-[16px] hover:bg-[#e7e7e7a2]"
                 onClick={() => onFolderClick(folder)}
               >
-                <div className="itemName flex items-center gap-2 w-[60%]  md:w-[25%] ">
+                <div className="itemName flex items-center w-[60%] gap-2 md:w-[25%] ">
                   <img
                     src="/Logo/Recent/folder.svg"
                     className="w-5"
@@ -404,7 +408,7 @@ function Recent({
                   <p className="bg-white p-2 rounded-full">Created | {setDate(folder.createdAt)}</p>
                   <p className="bg-white p-2 rounded-full">{setTime(folder.createdAt)}</p> 
                 </div>
-                    
+
                   <div className="accessName hidden md:block lg:block">
                     <p>{folder.creatorName}</p>
                   </div>
@@ -437,14 +441,14 @@ function Recent({
         )}
 
         {/* globle files */}
-        {data.length > 0 &&
-        data.filter((item) => item.folderId === null).length > 0 ? (
+        {filteredFiles.length > 0 &&
+        filteredFiles.filter((item) => item.folderId === null).length > 0 ? (
           <>
             <h2 className="text-lg md:text-xl lg:text-2xl mt-2 lg:mt-4 ">
               Files
             </h2>
             {/* Filter files to show only those with folderId: null */}
-            {data
+            {filteredFiles
               .filter((item) => item.folderId === null)
               .map((item, i) => (
                 <div
@@ -493,7 +497,7 @@ function Recent({
                   <div className="size hidden md:block lg:block">
                     <p className="text-gray-700"><span className="text-teal-600">{(item.size / 1024 / 1024).toFixed(1)}</span> MB</p>
                   </div>
-                  <div className="type  hidden md:block lg:block">
+                  {/* <div className="type  hidden md:block lg:block">
                     <p>
                       {fileTypes[item.fileName] === "Document"
                         ? "Document"
@@ -503,10 +507,10 @@ function Recent({
                         ? "Image"
                         : "Other"}
                     </p>
-                  </div>
+                  </div> */}
                   <div className="accessTime hidden md:block ">
-                    <p className="bg-white p-2 rounded-full">Last Opened | {setTime(item.lAccess)} </p>
-                  </div>
+                  <p className="bg-white p-2 rounded-full">Last Opened | {setTime(item.lAccess)} </p>
+                </div>
                   <div className="accessName hidden md:block lg:block ">
                     <p>{item.lName}</p>
                   </div>
@@ -545,10 +549,10 @@ function Recent({
           </>
         ) : null}
 
-        {data.length === 0 && folders.length === 0 && (
+        {filteredFiles.length === 0 && filteredFolders.length === 0 && (
           <div className="flex justify-center items-center text-gray-400 ">
             <i className="fa-solid fa-triangle-exclamation mr-2 "></i>
-            <p className="text-sm">No recent files or folders available.</p>
+            <p className="text-sm">No files or folders available</p>
           </div>
         )}
       </div>

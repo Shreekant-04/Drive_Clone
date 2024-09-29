@@ -4,6 +4,6 @@ const verifyToken = require("../controllers/jwtVerify");
 const { deleteFile } = require("../controllers/delController");
 
 
-router.delete('/delete/:filename',deleteFile)
+router.delete('/deletefiles/:filename',deleteFile)
 
 module.exports = router;

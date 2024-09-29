@@ -8,20 +8,21 @@ import Landing from "../pages/Landing/Landing";
 import PopupUpload from "../pages/Dashboard/PopupUpload";
 import SharePrev from "../pages/Common/SharePrev";
 import MyDrive from "../pages/MyDrive/MyDrive";
-
+import Shared from "../pages/Shared/shared";
+import Trash from "../pages/Trash/Trash";
 
 const Routing = () => {
-  
-
   return (
     <div>
       <Routes>
         <Route path="/" element={<Main />} />
-        <Route path="/dashboard" element={<Home/>} />
-        <Route path="/mydrive" element={<MyDrive/>} />
+        <Route path="/dashboard" element={<Home />} />
+        <Route path="/mydrive" element={<MyDrive />} />
+        <Route path="/shared" element={<Shared />} />
+        <Route path="/trash" element={<Trash />} />
         <Route path="/landing" element={<Landing />} />
         <Route path="/upload" element={<PopupUpload />} />
-        <Route path="/share/:filename" element={<SharePrev/>} />
+        <Route path="/share/:filename" element={<SharePrev />} />
       </Routes>
     </div>
   );
