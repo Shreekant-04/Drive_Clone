@@ -3,11 +3,15 @@ import React, { useState } from "react";
 import OTPInput from "react-otp-input";
 import api from "../../utils/api";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify"; 
 
 function Otp() {
 const nav = useNavigate()
   const [otp, setOtp ] = useState("");
-  const [email,setEmail] = useState(localStorage.getItem('email'))
+  
+  
+  const [email,setEmail] = useState(localStorage.getItem('email'));
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -23,10 +27,12 @@ const nav = useNavigate()
       }
     } catch (error) {
       if (error.response) {
-        console.log("Error from server:", error.response.data);
+        toast.error(error.response.data.error);
       } else if (error.request) {
+        toast.error("No response from server");
         console.log("No response from server:", error.request);
       } else {
+        toast.error("Error in setting up the request");
         console.log("Error in setting up the request:", error.message);
       }
     }

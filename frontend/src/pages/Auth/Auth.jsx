@@ -1,10 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
 import api from "../../utils/api";
+import { toast } from "react-toastify"; 
 
 function Auth({ check }) {
   const [email, setEmail] = useState("");
+  const emailInputRef = useRef(null); 
+  useEffect(() => {
+    emailInputRef.current.focus();
+  }, []);
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -19,10 +25,12 @@ function Auth({ check }) {
       }
     } catch (error) {
       if (error.response) {
-        console.log("Error from server:", error.response.data);
+        toast.error(error.response.data.error);
       } else if (error.request) {
+        toast.error("No response from server");
         console.log("No response from server:", error.request);
       } else {
+        toast.error("Error in setting up the request");
         console.log("Error in setting up the request:", error.message);
       }
     }
@@ -43,6 +51,7 @@ function Auth({ check }) {
           className="my-1 lg:my-2 w-full"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          inputRef={emailInputRef}
           required
           multiline
           InputProps={{

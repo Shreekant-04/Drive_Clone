@@ -64,12 +64,12 @@ function Profile({ data, profile, toggleEdit }) {
   }, []); // Add an empty dependency array to run the effect only once
 
   return (
-    <div className="sideBar w-52 md:w-60 lg:w-64 font-inter bg-gray-200 top-14 md:top-16 lg:top-20 p-2 h-full fixed overflow-y-auto z-20">
-      <div ref={topProfile} className="w-full">
+    <div className="sideBar w-52 md:w-60 lg:w-64 font-inter bg-gray-200 shadow-xl  top-14 md:top-16 lg:top-20 p-2 h-full fixed overflow-y-auto z-20">
+      <div ref={topProfile} className="w-full ">
         <img onClick={() => profile(false)} src="/Logo/back.svg" alt="back" />
         <div className="flex justify-center">
           <img
-            className="rounded-full w-[150px] h-[150px]"
+            className="rounded-full w-[150px] h-[150px] "
             src={
               data.profileLink
                 ? `data:image/jpeg;base64,${data.profileLink}`
@@ -91,7 +91,7 @@ function Profile({ data, profile, toggleEdit }) {
       
       <div className="overflow-hidden -mt-3">
         <div ref={textRef} className="text-center">
-          <p className="font-[800] text-gray-700">{data.name || "YOUR NAME"}</p>
+          <p className="font-[800] text-gray-800">{data.name || "YOUR NAME"}</p>
           <p className="text-gray-500 text-sm">{data.email}</p>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { checkFile, checkType } from "../../utils/fileType";
-import setTime from "../../utils/timeConverter";
+import {setTime, setDate} from "../../utils/timeConverter";
 import api from "../../utils/api";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -127,7 +127,6 @@ function Recent({
       toast.error("Folder name can't be empty!");
       return;
     }
-
     try {
       const response = await axios.put(
         `${api}folders/${folderId}`,
@@ -314,9 +313,11 @@ function Recent({
                       : "Other"}
                   </p>
                 </div> */}
-                <div className="accessTime  hidden md:block lg:block">
-                  <p>Last Opened {setTime(item.lAccess) || ""}</p>
+                
+                <div className="accessTime hidden md:block ">
+                  <p className="bg-white p-2 rounded-full">Last Opened | {setTime(item.lAccess)} </p>
                 </div>
+                
                 <div className="accessName w-[10%] hidden lg:block">
                   <p>{item.lName}</p>
                 </div>
@@ -392,10 +393,11 @@ function Recent({
                   {/* <div className="type hidden md:block lg:block">
                     <p>Folder</p>
                   </div> */}
-                  <div className="accessTime  items-center gap-2  hidden md:block lg:flex">
-                    <p className="bg-gray-200 p-2 rounded-full">Created at</p>
-                    <p className="bg-gray-200 p-2 rounded-full"> {setTime(folder.createdAt)}</p>
-                  </div>
+                 <div className="accessTime items-center gap-2 hidden md:block lg:flex">
+                  <p className="bg-white p-2 rounded-full">Created | {setDate(folder.createdAt)}</p>
+                  <p className="bg-white p-2 rounded-full">{setTime(folder.createdAt)}</p> 
+                </div>
+
                   <div className="accessName hidden md:block lg:block">
                     <p>{folder.creatorName}</p>
                   </div>
@@ -482,7 +484,7 @@ function Recent({
 
                 <div className="flex items-center gap-2 justify-evenly  w-[40%] md:w-[75%]">
                   <div className="size hidden md:block lg:block">
-                    <p>{(item.size / 1024 / 1024).toFixed(1)} MB</p>
+                    <p className="text-gray-700"><span className="text-teal-600">{(item.size / 1024 / 1024).toFixed(1)}</span> MB</p>
                   </div>
                   {/* <div className="type  hidden md:block lg:block">
                     <p>
@@ -495,9 +497,9 @@ function Recent({
                         : "Other"}
                     </p>
                   </div> */}
-                  <div className="accessTime  hidden md:block lg:block">
-                    <p>Last Opened {setTime(item.lAccess) || ""}</p>
-                  </div>
+                  <div className="accessTime hidden md:block ">
+                  <p className="bg-white p-2 rounded-full">Last Opened | {setTime(item.lAccess)} </p>
+                </div>
                   <div className="accessName hidden md:block lg:block ">
                     <p>{item.lName}</p>
                   </div>
