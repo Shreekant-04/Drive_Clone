@@ -720,7 +720,7 @@ const LandingHome = () => {
             </div>
 
             {/* Footer Links */}
-            <div className="flex space-x-16">
+            <div className="space-x-16 grid grid-cols-2 md:grid-cols-3">
               {/* Learn Links */}
               <div className="text-center lg:text-left">
                 <h3 className="text-lg font-semibold mb-2">LEARN</h3>

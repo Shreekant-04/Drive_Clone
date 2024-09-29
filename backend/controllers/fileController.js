@@ -139,7 +139,7 @@ exports.sharedFile = async (req, res) => {
 
     if (files.length === 0) {
       return res
-        .status(404)
+        .status(200)
         .json({ message: "No files found for the provided email" });
     }
 

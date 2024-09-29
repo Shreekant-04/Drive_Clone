@@ -134,3 +134,21 @@ img{
 ::-webkit-scrollbar-thumb:hover {
     @apply bg-zinc-900
 }
+
+
+/* landing page css */
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    overflow-x: hidden;
+}
+
+.swiper-pagination-bullet-active {
+    background: #004646;
+}
+
+.seamlessBg {
+    background-image: linear-gradient(to right, #1f2937, #000), url("./assets/seamlessBg.png");
+    background-size: cover;
+    background-position: center;
+}
