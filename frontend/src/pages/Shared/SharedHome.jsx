@@ -30,7 +30,7 @@ const SharedHome = ({ preview }) => {
           setData(res.data.files);
         }
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     }
   };
