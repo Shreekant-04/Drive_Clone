@@ -51,7 +51,7 @@ const plans = [
     period: "Per month",
     features: [
       "Drive, and Calendar",
-      "10 GB",
+      "500 MB",
       "Single device login",
       "1 custom domain",
     ],
