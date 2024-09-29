@@ -6,6 +6,7 @@ import axios from "axios";
 import api from "../../utils/api";
 import SharedFiles from "../Shared/SharedFiles";
 
+//
 function HomePage({ open, data, data2, isFolderOpen, toggleFolder, preview }) {
   const [folderFiles, setFolderFiles] = useState();
   const [selectedFolder, setSelectedFolder] = useState(null);
