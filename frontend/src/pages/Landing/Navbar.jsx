@@ -9,6 +9,13 @@ function Navbar() {
     setIsOpen(!isOpen);
   };
 
+  const scroll = (value) => {
+    window.scrollTo({
+      top: value,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <nav className="bg-gray-800 py-3 px-6 flex justify-between items-center w-10/12 mx-auto rounded-3xl absolute z-50 top-2 md:top-6 left-[50%] translate-x-[-50%]">
       <Link to={"/"} className="flex items-center justify-center">
@@ -22,26 +29,14 @@ function Navbar() {
 
       <div className="hidden lg:flex items-center space-x-6 text-white">
         <ul className="flex space-x-6">
-          <li className="relative group">
-            <a href="#" className="hover:text-gray-400">
-              Blog
-            </a>
-          </li>
-          <li className="relative group">
-            <a href="#" className="hover:text-gray-400">
-              Resources
-            </a>
-          </li>
-          <li>
+          <li onClick={()=>{
+            scroll(4000);
+          }}>
             <a href="#" className="hover:text-gray-400">
               Pricing
             </a>
           </li>
-          <li>
-            <a href="#" className="hover:text-gray-400">
-              Download
-            </a>
-          </li>
+
           <li>
             <Link to={"/login"} className="hover:text-gray-400">
               Sign in
@@ -80,24 +75,14 @@ function Navbar() {
       {isOpen && (
         <div className="lg:hidden absolute top-12 z-0 left-0 right-0 bg-gray-800 p-6 rounded-b-xl shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px]">
           <ul className="flex flex-col items-center space-y-4 text-white">
-            <li className="relative group">
-              <a href="#" className="hover:text-gray-400">
-                Blog
-              </a>
-            </li>
-            <li className="relative group">
-              <a href="#" className="hover:text-gray-400">
-                Resources
-              </a>
-            </li>
-            <li>
+            <li className="relative group"></li>
+            <li
+              onClick={() => {
+                scroll(4000);
+              }}
+            >
               <a href="#" className="hover:text-gray-400">
                 Pricing
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-gray-400">
-                Download
               </a>
             </li>
             <li>
