@@ -31,7 +31,7 @@ Demo Link -[Drive](https://drive-clone-frontend.vercel.app/)
   - Restore all deleted files or delete all permanently
   
 - **Sharing**:
-  - Share files and folders with other users for collaboration.
+  - Share files with other users for collaboration.
 
 - **File Preview**: Preview files before sharing or downloading.
   
