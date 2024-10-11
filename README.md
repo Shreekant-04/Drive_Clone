@@ -132,3 +132,6 @@ PORT=<your-port-number>
 ### File Preview & Management:
 - **Custom Controllers**: Built with Express.js for handling file uploads, downloads, and sharing.
 
+
+## Conclusion
+The Drive app is designed with a focus on ease of use and security, ensuring users can manage their files efficiently while maintaining data protection. With features like OTP-based login, sharing, and trash management, it caters to the needs of individuals and teams looking for a secure file storage solution.
