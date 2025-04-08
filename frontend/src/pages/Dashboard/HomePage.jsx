@@ -92,7 +92,7 @@ function HomePage({ open, data, data2, isFolderOpen, toggleFolder, preview }) {
         </div>
       </div>
       <div className="p-1">
-        {shared.length > 0 && !selectedFolder && (
+        {shared?.length > 0 && !selectedFolder && (
           <SharedFiles preview={preview} data={shared} text={"Shared with me"} />
         )}
       </div>
